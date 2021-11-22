@@ -16,10 +16,10 @@ public class Intermission {
 
     @ManyToOne
     @JoinColumn(name = "idUser")
-    private User user; //user ou EMployee ?
+    private User user; //user ou Employee ?
 
     @ManyToOne
-    @JoinColumn(name="idIntermissionStatus")
-    private Integer idIntermissionStatus;
+    @JoinColumn(name = "idIntermissionStatus")
+    private IntermissionStatus intermissionStatus;
 
 }

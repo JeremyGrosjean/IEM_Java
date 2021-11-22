@@ -20,7 +20,8 @@ public class Activity {
     private User user;
 
     @Enumerated(EnumType.ORDINAL)
-    private String period;
+    @Column(name = "period")
+    private Period period;
 
 
 }

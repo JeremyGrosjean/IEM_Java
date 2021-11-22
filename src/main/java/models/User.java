@@ -16,7 +16,8 @@ public abstract class User {
 
     //wtf Keskonfé avec ce userStatut
     @ManyToOne
-    public String idUserStatus;
+    @JoinColumn(name = "idUserStatus")
+    public UserStatus userStatus;
 
     public User() {
     }

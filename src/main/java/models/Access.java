@@ -15,5 +15,5 @@ public class Access {
 
     @ManyToOne
     @JoinColumn(name = "idUser")
-    private Integer idUser;
+    private User user;
 }
