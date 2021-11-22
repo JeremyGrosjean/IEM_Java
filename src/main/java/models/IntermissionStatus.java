@@ -15,4 +15,6 @@ public class IntermissionStatus {
 
     private String status;
 
+    public IntermissionStatus() {
+    }
 }

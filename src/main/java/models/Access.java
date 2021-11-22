@@ -16,4 +16,7 @@ public class Access {
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
+
+    public Access() {
+    }
 }

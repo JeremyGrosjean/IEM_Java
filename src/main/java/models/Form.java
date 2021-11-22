@@ -20,4 +20,7 @@ public class Form {
 
     @Transient //ou OneToMany ?
     List<Question> questionsList;
+
+    public Form() {
+    }
 }

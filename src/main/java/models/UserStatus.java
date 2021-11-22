@@ -11,5 +11,6 @@ public class UserStatus {
 
     private String userStatus;
 
-
+    public UserStatus() {
+    }
 }

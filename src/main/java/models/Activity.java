@@ -23,5 +23,6 @@ public class Activity {
     @Column(name = "period")
     private Period period;
 
-
+    public Activity() {
+    }
 }

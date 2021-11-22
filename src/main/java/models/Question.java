@@ -16,4 +16,7 @@ public class Question {
     private Form form;
 
     private String answer;
+
+    public Question() {
+    }
 }

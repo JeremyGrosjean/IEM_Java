@@ -22,4 +22,6 @@ public class Intermission {
     @JoinColumn(name = "idIntermissionStatus")
     private IntermissionStatus intermissionStatus;
 
+    public Intermission() {
+    }
 }

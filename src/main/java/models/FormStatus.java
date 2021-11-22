@@ -15,4 +15,6 @@ public class FormStatus {
     //FAIRE UNE ENUM ?
     private String formStatus;
 
+    public FormStatus() {
+    }
 }
