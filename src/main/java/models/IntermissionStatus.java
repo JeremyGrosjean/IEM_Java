@@ -1,19 +1,16 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "intermission_status")
 public class IntermissionStatus {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "idIntermission")
-    private Intermission intermission;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_intermission_status")
+    private Integer id;
 
-    private String status;
+    private boolean status;
 
     public IntermissionStatus() {
     }

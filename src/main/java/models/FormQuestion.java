@@ -2,25 +2,22 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "question")
-public class Question {
+@Entity(name = "form_question")
+public class FormQuestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_question")
+    @Column(name = "id_form_question")
     private Integer id;
-
-    private String content;
 
     @ManyToOne
     @JoinColumn(name = "id_form")
     private Form form;
 
-
     @ManyToOne
-    @JoinColumn(name = "id_answer")
-    private Answer answer;
+    @JoinColumn(name = "id_question")
+    private Question question;
 
-    public Question() {
+    public FormQuestion() {
     }
 }

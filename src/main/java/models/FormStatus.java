@@ -1,19 +1,17 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "form_status")
 public class FormStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_form_status")
     private Integer id;
 
-    //FAIRE UNE ENUM ?
-    private String formStatus;
+    @Column(name = "form_status")
+    private boolean formStatus;
 
     public FormStatus() {
     }
