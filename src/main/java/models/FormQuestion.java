@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "form_question")
+@Entity
+@Table(name = "form_question")
 public class FormQuestion {
 
     @Id

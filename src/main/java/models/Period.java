@@ -1,8 +1,11 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Entity(name = "period")
+// Je crois que le mapping de la table period ne fonctionne pas
+@Entity
+@Table(name = "period")
 public enum Period {
     MATIN,
     APRÈSMIDI

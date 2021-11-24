@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "iem_user")
+@Entity
+@Table(name = "iem_user")
 public abstract class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

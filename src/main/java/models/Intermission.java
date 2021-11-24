@@ -3,7 +3,8 @@ package models;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "intermission")
+@Entity
+@Table(name = "intermission")
 public class Intermission {
 
     @Id

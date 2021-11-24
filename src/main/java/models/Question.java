@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "question")
+@Entity
+@Table(name = "question")
 public class Question {
 
     @Id
@@ -17,7 +18,7 @@ public class Question {
     private Form form;
 
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_answer")
     private Answer answer;
 

@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "answer")
+@Entity
+@Table(name = "answer")
 public class Answer {
 
     @Id
@@ -15,6 +16,9 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "id_form_question")
     private FormQuestion formQuestion;
+
+    @OneToOne(mappedBy = "answer")//je suis pas sur de ca
+    private Question question;
 
     public Answer() {
     }

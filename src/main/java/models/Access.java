@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "access")
+@Entity
+@Table(name = "access")
 public class Access {
 
     @Id

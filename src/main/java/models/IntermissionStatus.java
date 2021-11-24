@@ -2,7 +2,8 @@ package models;
 
 import javax.persistence.*;
 
-@Entity(name = "intermission_status")
+@Entity
+@Table(name = "intermission_status")
 public class IntermissionStatus {
 
     @Id
