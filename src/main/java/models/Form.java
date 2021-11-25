@@ -1,25 +1,23 @@
 package models;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Entity(name = "form")
+@Entity
+@Table(name = "form")
 public class Form {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_form")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
-    private User user;
+    @JoinColumn(name = "id_user")
+    private Employee employee;
 
     @OneToOne
-    @JoinColumn(name = "idFormStatus")
+    @JoinColumn(name = "id_form_status")
     private FormStatus formStatus;
-
-    @Transient //ou OneToMany ?
-    List<Question> questionsList;
 
     public Form() {
     }

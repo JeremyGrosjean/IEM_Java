@@ -3,12 +3,13 @@ package models;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "activity")
+@Entity
+@Table(name = "activity")
 public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idActivity")
+    @Column(name = "id_activity")
     private Integer id;
 
     private String title;
@@ -16,10 +17,10 @@ public class Activity {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name="idUser")
-    private User user;
+    @JoinColumn(name="id_user")
+    private Employee employee;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "period")
     private Period period;
 
