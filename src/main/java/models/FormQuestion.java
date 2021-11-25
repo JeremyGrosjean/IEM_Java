@@ -11,11 +11,11 @@ public class FormQuestion {
     @Column(name = "id_form_question")
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_form")
     private Form form;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_question")
     private Question question;
 

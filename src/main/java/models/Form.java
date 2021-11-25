@@ -15,9 +15,12 @@ public class Form {
     @JoinColumn(name = "id_user")
     private Employee employee;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_form_status")
     private FormStatus formStatus;
+
+    @OneToOne(mappedBy = "form")
+    private FormQuestion formQuestion;
 
     public Form() {
     }

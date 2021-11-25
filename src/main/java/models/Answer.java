@@ -17,7 +17,7 @@ public class Answer {
     @JoinColumn(name = "id_form_question")
     private FormQuestion formQuestion;
 
-    @OneToOne(mappedBy = "answer")//je suis pas sur de ca
+    @OneToOne(mappedBy = "answer")
     private Question question;
 
     public Answer() {

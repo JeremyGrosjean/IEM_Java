@@ -14,8 +14,7 @@ public class Access {
     private String account;
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
+    @OneToOne(mappedBy = "access")
     private User user;
 
     public Access() {
