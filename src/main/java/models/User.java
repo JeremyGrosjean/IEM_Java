@@ -7,13 +7,16 @@ import javax.persistence.*;
 public abstract class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     private int idUser;
 
     private String lastName;
     private String firstName;
     private String email;
-    private String account;
-    private String password;
+
+    @OneToOne
+    @JoinColumn(name = "id_access")
+    private Access access;
 
     //wtf Keskonfé avec ce userStatut
     @ManyToOne
@@ -55,19 +58,4 @@ public abstract class User {
         this.email = email;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -8,11 +8,11 @@ CREATE TABLE activity(
 	period String
 );
 
--- Create table PERIOD **
-CREATE TABLE period(
-	id_period serial PRIMARY KEY,
-	period varchar
-);
+---- Create table PERIOD **
+--CREATE TABLE period(
+--	id_period serial PRIMARY KEY,
+--	period varchar
+--);
 
 -- Create table Iem_USER **
 CREATE TABLE iem_user(
@@ -50,7 +50,7 @@ CREATE TABLE intermission(
 
 -- Create table INTERMISSION_STATUS **
 CREATE TABLE intermission_status(
-	id_intermission_status serial PRIMARY KEY,    --fk?
+	id_intermission_status serial PRIMARY KEY,
 	status boolean
 );
 
