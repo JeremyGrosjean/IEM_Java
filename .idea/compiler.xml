@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="iemjava" />
+        <module name="IEM_Java" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="IEM_Java" options="-parameters" />
       <module name="iemjava" options="-parameters" />
     </option>
   </component>
