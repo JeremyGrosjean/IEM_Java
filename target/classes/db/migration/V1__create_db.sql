@@ -4,19 +4,13 @@ CREATE TABLE activity(
 	title varchar,
 	content varchar,
 	date date,
-	id_user integer,
+	id_user varchar,
 	period varchar
 );
 
----- Create table PERIOD **
---CREATE TABLE period(
---	id_period serial PRIMARY KEY,
---	period varchar
---);
-
 -- Create table Iem_USER **
 CREATE TABLE iem_user(
-	id_user serial PRIMARY KEY,
+	id_user varchar PRIMARY KEY,
 	last_name varchar,
 	first_name varchar,
 	email varchar,
@@ -25,18 +19,12 @@ CREATE TABLE iem_user(
 	user_status varchar
 );
 
----- Create table USER_STATUS **
---CREATE TABLE user_status(
---	id_user_status serial PRIMARY KEY,
---	user_status varchar
---);
-
 -- Create table ACCESS **
 CREATE TABLE access(
 	id_access serial PRIMARY KEY,
 	account varchar,
 	password varchar,
-	id_user integer
+	id_user varchar
 );
 
 -- Create table INTERMISSION **
@@ -44,7 +32,7 @@ CREATE TABLE intermission(
 	id_intermission serial PRIMARY KEY,
 	start_date date,
 	end_date date,
-	id_user integer,
+	id_user varchar,
 	id_intermission_status integer
 );
 
@@ -57,7 +45,7 @@ CREATE TABLE intermission_status(
 -- Create table FORM **
 CREATE TABLE form(
 	id_form serial PRIMARY KEY,
-	id_user integer,
+	id_user varchar,
 	id_form_status integer
 );
 
@@ -93,10 +81,6 @@ CREATE TABLE question(
 
 -- Create foreign keys for table ACTIVITY : id_user et id_period
 ALTER TABLE activity ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
---ALTER TABLE activity ADD CONSTRAINT fk_id_period FOREIGN KEY (id_period) REFERENCES period(id_period);
-
--- Create foreign keys for table IEM_USER : id_user_status
---ALTER TABLE iem_user ADD CONSTRAINT fk_id_user_status FOREIGN KEY (id_user_status) REFERENCES user_status(id_user_status);
 
 -- Create foreign keys for table ACCESS : id_user
 ALTER TABLE access ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
