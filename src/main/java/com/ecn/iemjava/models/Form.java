@@ -13,7 +13,7 @@ public class Form {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User employee;
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "id_form_status")

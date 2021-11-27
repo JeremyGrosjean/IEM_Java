@@ -19,7 +19,7 @@ public class Intermission {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User employee;
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "id_intermission_status")
