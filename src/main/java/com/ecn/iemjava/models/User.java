@@ -1,6 +1,7 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -8,26 +9,21 @@ import javax.persistence.*;
 @Table(name = "iem_user", schema = "public")
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private int idUser;
+    private String id = UUID.randomUUID().toString();
 
     private String lastName;
     private String firstName;
     private String email;
 
-    @OneToOne (mappedBy = "user")
-    private Access access;
+//    @OneToOne (mappedBy = "user")
+//    private Access access;
 
     public User() {
     }
 
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public String getId() {
+        return id;
     }
 
     public String getLastName() {
@@ -54,4 +50,11 @@ public abstract class User {
         this.email = email;
     }
 
+//    public Access getAccess() {
+//        return access;
+//    }
+//
+//    public void setAccess(Access access) {
+//        this.access = access;
+//    }
 }

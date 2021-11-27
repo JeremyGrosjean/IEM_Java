@@ -36,7 +36,7 @@ public class EmployeeController {
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the employee hasn't been found
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable("id") Integer id){
+    public Employee getEmployeeById(@PathVariable("id") String id){
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         return optionalEmployee.orElse(null);
     }

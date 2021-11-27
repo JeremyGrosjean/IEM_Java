@@ -4,13 +4,13 @@ CREATE TABLE activity(
 	title varchar,
 	content varchar,
 	date date,
-	id_user integer,
+	id_user varchar,
 	period varchar
 );
 
 -- Create table Iem_USER **
 CREATE TABLE iem_user(
-	id_user serial PRIMARY KEY,
+	id_user varchar PRIMARY KEY,
 	last_name varchar,
 	first_name varchar,
 	email varchar,
@@ -24,7 +24,7 @@ CREATE TABLE access(
 	id_access serial PRIMARY KEY,
 	account varchar,
 	password varchar,
-	id_user integer
+	id_user varchar
 );
 
 -- Create table INTERMISSION **
@@ -32,7 +32,7 @@ CREATE TABLE intermission(
 	id_intermission serial PRIMARY KEY,
 	start_date date,
 	end_date date,
-	id_user integer,
+	id_user varchar,
 	id_intermission_status integer
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE intermission_status(
 -- Create table FORM **
 CREATE TABLE form(
 	id_form serial PRIMARY KEY,
-	id_user integer,
+	id_user varchar,
 	id_form_status integer
 );
 
