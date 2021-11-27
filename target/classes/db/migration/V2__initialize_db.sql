@@ -1,8 +1,3 @@
--- user status
---INSERT INTO user_status (id_user_status, user_status) VALUES
---(1, 'admin'),
---(2, 'employee');
-
 -- intermission status
 INSERT INTO intermission_status (id_intermission_status, status) VALUES
 (1, 'true'),

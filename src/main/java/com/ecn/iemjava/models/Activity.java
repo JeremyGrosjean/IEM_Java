@@ -16,12 +16,59 @@ public class Activity {
     private String content;
     private Date date;
 
-    @Transient
-    private User employee;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private Employee employee;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "period")
-    private Period period;
+    private String period;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
 
     public Activity() {
     }
