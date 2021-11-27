@@ -41,9 +41,9 @@ INSERT INTO form (id_user, id_form_status) VALUES
 (6, 3);
 
 -- custom question
-INSERT INTO question (content, public) VALUES
-('Serais-tu intéressé par un changement de domaine', false),
- ('Souhaiterais-tu plus de respnsabilités', false);
+INSERT INTO question (content) VALUES
+('Serais-tu intéressé par un changement de domaine'),
+('Souhaiterais-tu plus de responsabilités');
 
 --form_question
 INSERT INTO form_question (id_form, id_question) VALUES
