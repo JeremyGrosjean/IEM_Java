@@ -24,4 +24,32 @@ public class Form {
 
     public Form() {
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public FormStatus getFormStatus() {
+        return formStatus;
+    }
+
+    public void setFormStatus(FormStatus formStatus) {
+        this.formStatus = formStatus;
+    }
+
+    public FormQuestion getFormQuestion() {
+        return formQuestion;
+    }
+
+    public void setFormQuestion(FormQuestion formQuestion) {
+        this.formQuestion = formQuestion;
+    }
 }

@@ -14,6 +14,20 @@ public class FormStatus {
     @Column(name = "form_status")
     private boolean formStatus;
 
+
+
     public FormStatus() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public boolean isFormStatus() {
+        return formStatus;
+    }
+
+    public void setFormStatus(boolean formStatus) {
+        this.formStatus = formStatus;
     }
 }

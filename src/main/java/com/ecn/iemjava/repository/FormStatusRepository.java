@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FormStatusRepository extends JpaRepository<FormStatus,Integer> {
 
-    @Query("SELECT fs.formStatus FROM FormStatus fs WHERE fs = ?1")
-    boolean getFormStatusById(FormStatus formStatus);
 }
