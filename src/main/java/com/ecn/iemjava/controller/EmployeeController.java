@@ -1,8 +1,11 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Employee;
+import com.ecn.iemjava.models.FormStatus;
 import com.ecn.iemjava.models.User;
 import com.ecn.iemjava.repository.EmployeeRepository;
+import com.ecn.iemjava.repository.FormRepository;
+import com.ecn.iemjava.repository.FormStatusRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +18,13 @@ public class EmployeeController {
 
     // Injection of Repository
     private EmployeeRepository employeeRepository;
-    public EmployeeController(EmployeeRepository employeeRepository) {
+    private FormRepository formRepository;
+    private FormStatusRepository formStatusRepository;
+
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, FormStatusRepository formStatusRepository) {
         this.employeeRepository = employeeRepository;
+        this.formRepository = formRepository;
+        this.formStatusRepository = formStatusRepository;
     }
 
     // Request to add an answer
@@ -40,6 +48,13 @@ public class EmployeeController {
     public Employee getEmployeeById(@PathVariable("id") String id){
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         return optionalEmployee.orElse(null);
+    }
+
+    @GetMapping("/formstatus/{id}")
+    public boolean getFormStatus(@PathVariable("id") String id){
+        Employee employee = getEmployeeById(id);
+        FormStatus formStatus = formRepository.getFormStatusByEmployee(employee);
+        return formStatusRepository.getFormStatusById(formStatus);
     }
 
 }
