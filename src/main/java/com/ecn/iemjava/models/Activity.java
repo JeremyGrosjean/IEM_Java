@@ -78,7 +78,6 @@ public class Activity {
                 ", date=" + date +
                 '}';
     }
-
     public Activity() {
     }
 }
