@@ -26,4 +26,40 @@ public class Question {
 
     public Question() {
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public FormQuestion getFormQuestion() {
+        return formQuestion;
+    }
+
+    public void setFormQuestion(FormQuestion formQuestion) {
+        this.formQuestion = formQuestion;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 }

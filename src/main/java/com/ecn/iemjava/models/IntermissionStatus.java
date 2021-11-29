@@ -15,4 +15,16 @@ public class IntermissionStatus {
 
     public IntermissionStatus() {
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }

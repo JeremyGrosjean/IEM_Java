@@ -27,4 +27,40 @@ public class Intermission {
 
     public Intermission() {
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public IntermissionStatus getIntermissionStatus() {
+        return intermissionStatus;
+    }
+
+    public void setIntermissionStatus(IntermissionStatus intermissionStatus) {
+        this.intermissionStatus = intermissionStatus;
+    }
 }
