@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.function.BiConsumer;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -21,6 +20,7 @@ public class ActivityController {
 
     @GetMapping("/all")
     public Map<Date,List<Activity>> getAllActivities() {
+        System.out.println("toutes les activités = " + activityRepository.findAll());
         return sortActivities(activityRepository.findAll());
     }
 
@@ -39,15 +39,20 @@ public class ActivityController {
 
     public Map<Date, List<Activity>> sortActivities(List <Activity> activities){
         Map<Date, List<Activity>> sortedActivities = new HashMap<>();
-        List<Activity> activitiesByDay = new ArrayList<>();
+
         activities.forEach(activity -> {
             if (!sortedActivities.containsKey(activity.getDate())){
+                List<Activity> activitiesByDay = new ArrayList<>();
                 activitiesByDay.add(activity);
                 sortedActivities.put(activity.getDate(), activitiesByDay);
-                activitiesByDay.clear();
+                System.out.println("if - " + activity);
+                System.out.println(sortedActivities);
             }
             else{
-                sortedActivities.get(activity.getDate()).add(activity);
+                System.out.println("else - " + activity);
+                List<Activity> activitiesByDay = sortedActivities.get(activity.getDate());
+                activitiesByDay.add(activity);
+                sortedActivities.put(activity.getDate(), activitiesByDay);
             }
         });
         return sortedActivities;
