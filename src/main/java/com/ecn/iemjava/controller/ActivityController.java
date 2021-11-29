@@ -20,7 +20,6 @@ public class ActivityController {
 
     @GetMapping("/all")
     public Map<Date,List<Activity>> getAllActivities() {
-        System.out.println("toutes les activités = " + activityRepository.findAll());
         return sortActivities(activityRepository.findAll());
     }
 
@@ -36,6 +35,15 @@ public class ActivityController {
         activityRepository.save(activity);
         return activity;
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteActivity(@PathVariable ("id") Integer id){
+        activityRepository.deleteById(id);
+    }
+
+    //TODO : just one day
+
+
 
     public Map<Date, List<Activity>> sortActivities(List <Activity> activities){
         Map<Date, List<Activity>> sortedActivities = new HashMap<>();
