@@ -70,6 +70,15 @@ public class Activity {
         this.period = period;
     }
 
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
     public Activity() {
     }
 }

@@ -5,10 +5,8 @@ import com.ecn.iemjava.repository.ActivityRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.BiConsumer;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -21,15 +19,31 @@ public class ActivityController {
     }
 
     @GetMapping("/all")
-    public List<Activity> getAllActivities() {
-        return activityRepository.findAll();
+    public Map<Date,List<Activity>> getAllActivities() {
+        return sortActivities(activityRepository.findAll());
     }
 
     @ResponseBody
     @GetMapping("/week/{dateBeginning}/{dateEnding}")
-    public List<Activity> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBeginning,
+    public Map<Date,List<Activity>> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBeginning,
                                            @PathVariable ("dateEnding") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateEnding) {
-        return activityRepository.findActivityByCurrentWeek(dateBeginning, dateEnding);
+        return sortActivities(activityRepository.findActivityByCurrentWeek(dateBeginning, dateEnding));
+    }
+
+    public Map<Date, List<Activity>> sortActivities(List <Activity> activities){
+        Map<Date, List<Activity>> sortedActivities = new HashMap<>();
+        List<Activity> activitiesByDay = new ArrayList<>();
+        activities.forEach(activity -> {
+            if (!sortedActivities.containsKey(activity.getDate())){
+                activitiesByDay.add(activity);
+                sortedActivities.put(activity.getDate(), activitiesByDay);
+                activitiesByDay.clear();
+            }
+            else{
+                sortedActivities.get(activity.getDate()).add(activity);
+            }
+        });
+        return sortedActivities;
     }
 
 //    @GetMapping("/{id}")
