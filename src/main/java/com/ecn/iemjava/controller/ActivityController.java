@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -19,20 +21,20 @@ public class ActivityController {
     }
 
     @GetMapping("/all")
-    public Map<Date,List<Activity>> getAllActivities() {
+    public Map<LocalDate,List<Activity>> getAllActivities() {
         return sortActivities(activityRepository.findAll());
     }
 
     @ResponseBody
     @GetMapping("/week/{dateBeginning}/{dateEnding}")
-    public Map<Date,List<Activity>> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBeginning,
-                                           @PathVariable ("dateEnding") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateEnding) {
+    public Map<LocalDate,List<Activity>> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateBeginning,
+                                           @PathVariable ("dateEnding") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnding) {
         return sortActivities(activityRepository.findActivityByCurrentWeek(dateBeginning, dateEnding));
     }
 
     @ResponseBody
     @GetMapping("/oneDay/{date}")
-    public Map<Date,List<Activity>> getCustomedActivities(@PathVariable ("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date){
+    public Map<LocalDate,List<Activity>> getCustomedActivities(@PathVariable ("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate date){
         return sortActivities(activityRepository.findActivityByOneDay(date));
     }
 
@@ -51,8 +53,8 @@ public class ActivityController {
 
 
 
-    public Map<Date, List<Activity>> sortActivities(List <Activity> activities){
-        Map<Date, List<Activity>> sortedActivities = new HashMap<>();
+    public Map<LocalDate, List<Activity>> sortActivities(List <Activity> activities){
+        Map<LocalDate, List<Activity>> sortedActivities = new HashMap<>();
         activities.forEach(activity -> {
             if (!sortedActivities.containsKey(activity.getDate())){
                 List<Activity> activitiesByDay = new ArrayList<>();
