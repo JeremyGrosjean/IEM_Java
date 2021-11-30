@@ -2,8 +2,10 @@ package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.*;
 import com.ecn.iemjava.repository.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +33,8 @@ public class EmployeeController {
 
     // Request to add an answer
     // TODO: change type of return wether it is needed or not (Employee or void)
-    @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee){
+    @PostMapping("/{startDate}")
+    public Employee addEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate){
         // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
         Form form = new Form();
         FormQuestion formQuestion = new FormQuestion();
@@ -42,7 +44,7 @@ public class EmployeeController {
         formQuestion.setQuestion(null);
 
         intermission.setEmployee(employee);
-        intermission.setStartDate(null);
+        intermission.setStartDate(startDate);
         intermission.setEndDate(null);
         intermission.setIntermissionStatus(intermissionStatusRepository.getIntermissionStatusByStatus(false));
 

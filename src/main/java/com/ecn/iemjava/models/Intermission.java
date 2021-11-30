@@ -1,6 +1,7 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,9 +14,9 @@ public class Intermission {
     private Integer id;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -32,19 +33,19 @@ public class Intermission {
         return id;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
