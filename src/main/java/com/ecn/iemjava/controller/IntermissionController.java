@@ -14,11 +14,11 @@ import java.util.Optional;
 public class IntermissionController {
 
     private IntermissionRepository intermissionRepository;
-    private EmployeeController employeeController;
 
-    public IntermissionController(IntermissionRepository intermissionRepository, EmployeeController employeeController) {
+
+    public IntermissionController(IntermissionRepository intermissionRepository) {
         this.intermissionRepository = intermissionRepository;
-        this.employeeController = employeeController;
+
     }
 
 
@@ -39,12 +39,12 @@ public class IntermissionController {
         return optionalIntermission.orElse(null);
     }
 
-    @PutMapping("/startdate/{id}/{startDate}")
-    public LocalDate setStartDateByEmployeeId(@PathVariable("id") String id, @PathVariable("startDate") LocalDate startDate){
-        Employee employee = employeeController.getEmployeeById(id);
-        Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
-        intermission.setStartDate(startDate);
-        intermissionRepository.save(intermission);
-        return intermission.getStartDate();
-    }
+//    @PutMapping("/startdate/{id}/{startDate}")
+//    public LocalDate setStartDateByEmployeeId(@PathVariable("id") String id, @PathVariable("startDate") LocalDate startDate){
+//        Employee employee = employeeController.getEmployeeById(id);
+//        Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
+//        intermission.setStartDate(startDate);
+//        intermissionRepository.save(intermission);
+//        return intermission.getStartDate();
+//    }
 }
