@@ -69,6 +69,7 @@ public class EmployeeController {
         return optionalEmployee.orElse(null);
     }
 
+    // Request to get the form status
     @GetMapping("/formstatus/{id}")
     public boolean getFormStatus(@PathVariable("id") String id){
         Employee employee = getEmployeeById(id);
