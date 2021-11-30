@@ -15,8 +15,6 @@ CREATE TABLE iem_user(
 	last_name varchar,
 	first_name varchar,
 	email varchar,
-    account varchar,
-    password varchar,
 	user_status varchar
 );
 
