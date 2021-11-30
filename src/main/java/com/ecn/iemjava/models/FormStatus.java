@@ -9,7 +9,8 @@ public class FormStatus {
 
     @Id
     @Column(name = "id_form_status")
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "form_status")
     private boolean formStatus;
@@ -19,7 +20,7 @@ public class FormStatus {
     public FormStatus() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

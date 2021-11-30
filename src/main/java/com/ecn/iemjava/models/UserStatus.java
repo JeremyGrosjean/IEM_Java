@@ -9,12 +9,13 @@ public class UserStatus {
 
     @Id
     @Column(name = "id_user_status")
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "user_status")
     private String userStatus;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

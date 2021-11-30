@@ -9,14 +9,15 @@ public class IntermissionStatus {
 
     @Id
     @Column(name = "id_intermission_status")
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private boolean status;
 
     public IntermissionStatus() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
