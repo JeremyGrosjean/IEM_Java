@@ -41,28 +41,30 @@ INSERT INTO form (id_user, id_form_status) VALUES
 (6, 1);
 
 -- custom question
-INSERT INTO question (content) VALUES
-('Serais-tu intéressé par un changement de domaine'),
-('Souhaiterais-tu plus de responsabilités');
-
---form_question
-INSERT INTO form_question (id_form, id_question) VALUES
-(1, 2),
-(1, 1),
-(1, 5),
-(1, 6),
-(2, 7),
-(2, 5),
-(3, 5),
-(3, 2),
-(3, 4);
+INSERT INTO question (content, generic) VALUES
+('Serais-tu intéressé par un changement de domaine','false'),
+('Souhaiterais-tu plus de responsabilités', 'false');
 
 -- answer.
-INSERT INTO answer (content, id_form_question) VALUES
-('Réponse à la question 2', 1),
-('Réponse à la question 1', 2),
-('Réponse à la question 5', 3),
-('Réponse à la question 6', 4),
-('Réponse à la question 7', 5),
-('Réponse à la question 8', 6),
-('Réponse à la question 5', 7);
+INSERT INTO answer (content) VALUES
+('Réponse à la question 2'),
+('Réponse à la question 1'),
+('Réponse à la question 3'),
+('Réponse à la question 6'),
+('Réponse à la question 7'),
+('Réponse à la question 5'),
+('Réponse à la question 4');
+
+--form_question
+INSERT INTO form_question (id_form, id_question, id_answer) VALUES
+(1,1,2),
+(1,2,1),
+(1,3,3),
+(1,4,7),
+(1,5,6),
+(2,1,2),
+(2,2,1),
+(2,3,3),
+(2,4,7),
+(2,5,6);
+

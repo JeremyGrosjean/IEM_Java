@@ -19,9 +19,6 @@ public class Form {
     @JoinColumn(name = "id_form_status")
     private FormStatus formStatus;
 
-    @OneToOne(mappedBy = "form")
-    private FormQuestion formQuestion;
-
     public Form() {
     }
 
@@ -45,11 +42,5 @@ public class Form {
         this.formStatus = formStatus;
     }
 
-    public FormQuestion getFormQuestion() {
-        return formQuestion;
-    }
 
-    public void setFormQuestion(FormQuestion formQuestion) {
-        this.formQuestion = formQuestion;
-    }
 }

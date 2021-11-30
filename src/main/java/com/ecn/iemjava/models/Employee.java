@@ -14,6 +14,5 @@ public class Employee extends User{
     private List<Form> forms;
 
     public Employee() {
-
     }
 }

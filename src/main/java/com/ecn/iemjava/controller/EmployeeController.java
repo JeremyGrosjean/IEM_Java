@@ -14,63 +14,42 @@ public class EmployeeController {
 
     // Injection of Repository
     private EmployeeRepository employeeRepository;
-    private FormRepository formRepository;
     private FormController formController;
+    private FormRepository formRepository;
+    private FormQuestionController formQuestionController;
+    private IntermissionController intermissionController;
     private IntermissionStatusRepository intermissionStatusRepository;
-    private IntermissionRepository intermissionRepository;
-    private FormStatusRepository formStatusRepository;
-    private FormQuestionRepository formQuestionRepository;
-    private QuestionRepository questionRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, FormController formController, IntermissionStatusRepository intermissionStatusRepository, IntermissionRepository intermissionRepository, FormStatusRepository formStatusRepository, FormQuestionRepository formQuestionRepository, QuestionRepository questionRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionStatusRepository intermissionStatusRepository) {
         this.employeeRepository = employeeRepository;
-        this.formRepository = formRepository;
         this.formController = formController;
+        this.formRepository = formRepository;
+        this.formQuestionController = formQuestionController;
+        this.intermissionController = intermissionController;
         this.intermissionStatusRepository = intermissionStatusRepository;
-        this.intermissionRepository = intermissionRepository;
-        this.formStatusRepository = formStatusRepository;
-        this.formQuestionRepository = formQuestionRepository;
-        this.questionRepository = questionRepository;
     }
 
     // Request to add an answer
     // TODO: change type of return wether it is needed or not (Employee or void)
     @PostMapping
     public Employee addEmployee(@RequestBody Employee employee){
+        // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
         Form form = new Form();
-        FormStatus formStatus = new FormStatus();
         FormQuestion formQuestion = new FormQuestion();
-        Question question = new Question();
         Intermission intermission = new Intermission();
-        IntermissionStatus intermissionStatus = new IntermissionStatus();
-        // Déclaration d'un form status a false
-            formStatus.setFormStatus(false);
-            // Déclaration d'un formQuestion à 1 question
-            // TODO: remplacer par la methode formulaire standard
-            formQuestion.setQuestion(question);
-            question.setContent("Nouvelle question pour voir si ca marche");
-            question.setForm(form);
-            question.setFormQuestion(formQuestion);
-
-        // Déclaration d'un formulaire
-        form.setEmployee(employee);
-        form.setFormStatus(formStatus);
-        form.setFormQuestion(formQuestion);
-
+        // Link the formQuestion
         formQuestion.setForm(form);
+        formQuestion.setQuestion(null);
 
         intermission.setEmployee(employee);
         intermission.setStartDate(null);
-        intermission.setIntermissionStatus(intermissionStatus);
+        intermission.setEndDate(null);
+        intermission.setIntermissionStatus(intermissionStatusRepository.getIntermissionStatusByStatus(false));
 
-        // Persiter en base l'employee, puis le formulaire, puis le formulaire
         employeeRepository.save(employee);
-        questionRepository.save(question);
-        formQuestionRepository.save(formQuestion);
-        formStatusRepository.save(formStatus);
         formController.addForm(form);
-        intermissionStatusRepository.save(intermissionStatus);
-        intermissionRepository.save(intermission);
+        formQuestionController.addFormQuestion(formQuestion);
+        intermissionController.addIntermission(intermission);
 
         return employee;
     }
@@ -90,6 +69,7 @@ public class EmployeeController {
         return optionalEmployee.orElse(null);
     }
 
+    // Request to get the form status
     @GetMapping("/formstatus/{id}")
     public boolean getFormStatus(@PathVariable("id") String id){
         Employee employee = getEmployeeById(id);

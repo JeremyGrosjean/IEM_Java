@@ -1,6 +1,7 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "question")
@@ -13,16 +14,8 @@ public class Question {
 
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "id_form")
-    private Form form;
+    private boolean generic;
 
-    @OneToOne(mappedBy = "question")
-    private FormQuestion formQuestion;
-
-    @OneToOne
-    @JoinColumn(name = "id_answer")
-    private Answer answer;
 
     public Question() {
     }
@@ -39,27 +32,4 @@ public class Question {
         this.content = content;
     }
 
-    public Form getForm() {
-        return form;
-    }
-
-    public void setForm(Form form) {
-        this.form = form;
-    }
-
-    public FormQuestion getFormQuestion() {
-        return formQuestion;
-    }
-
-    public void setFormQuestion(FormQuestion formQuestion) {
-        this.formQuestion = formQuestion;
-    }
-
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
 }

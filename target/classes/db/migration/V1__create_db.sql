@@ -1,3 +1,4 @@
+
 -- Create table ACTIVITY **
 CREATE TABLE activity(
 	id_activity serial PRIMARY KEY,
@@ -14,8 +15,6 @@ CREATE TABLE iem_user(
 	last_name varchar,
 	first_name varchar,
 	email varchar,
-    account varchar,
-    password varchar,
 	user_status varchar
 );
 
@@ -59,23 +58,21 @@ CREATE TABLE form_status(
 CREATE TABLE form_question(
 	id_form_question serial PRIMARY KEY,
 	id_form integer,
-	id_question integer
+	id_question integer,
+	id_answer integer
 );
 
 -- Create table ANSWER
 CREATE TABLE answer(
 	id_answer serial PRIMARY KEY,
-	content varchar,
-	id_form_question integer
+	content varchar
 );
 
 -- Create table QUESTION **
 CREATE TABLE question(
 	id_question serial PRIMARY KEY,
 	content varchar,
-	generic boolean,
-    id_answer integer,
-	id_form integer
+	generic boolean
 );
 
 
@@ -96,9 +93,9 @@ ALTER TABLE intermission ADD CONSTRAINT fk_id_intermission_status FOREIGN KEY (i
 -- Create foreign keys for table FORM_QUESTION : id_question et id_form
 ALTER TABLE form_question ADD CONSTRAINT fk_id_question FOREIGN KEY (id_question) REFERENCES question(id_question);
 ALTER TABLE form_question ADD CONSTRAINT fk_id_form FOREIGN KEY (id_form) REFERENCES form(id_form);
+ALTER TABLE form_question ADD CONSTRAINT fk_id_answer FOREIGN KEY (id_answer) REFERENCES answer(id_answer);
 
--- Create foreign keys for table ANSWER : id_form_question
-ALTER TABLE answer ADD CONSTRAINT fk_id_form_question FOREIGN KEY (id_form_question) REFERENCES form_question(id_form_question);
+
 
 
 

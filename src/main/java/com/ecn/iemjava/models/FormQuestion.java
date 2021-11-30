@@ -19,6 +19,10 @@ public class FormQuestion {
     @JoinColumn(name = "id_question")
     private Question question;
 
+    @OneToOne
+    @JoinColumn(name = "id_answer")
+    private Answer answer;
+
     public FormQuestion() {
     }
 
@@ -40,5 +44,13 @@ public class FormQuestion {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 }

@@ -1,6 +1,7 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -14,7 +15,7 @@ public class Activity {
 
     private String title;
     private String content;
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -46,11 +47,11 @@ public class Activity {
         this.content = content;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

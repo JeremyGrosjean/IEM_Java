@@ -13,13 +13,6 @@ public class Answer {
 
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "id_form_question")
-    private FormQuestion formQuestion;
-
-    @OneToOne(mappedBy = "answer")
-    private Question question;
-
     public Answer() {
     }
 
@@ -39,19 +32,4 @@ public class Answer {
         this.content = content;
     }
 
-    public FormQuestion getFormQuestion() {
-        return formQuestion;
-    }
-
-    public void setFormQuestion(FormQuestion formQuestion) {
-        this.formQuestion = formQuestion;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 }
