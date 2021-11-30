@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FormRepository extends JpaRepository<Form,Integer> {
+public interface FormRepository extends JpaRepository<Form,String> {
 
     @Query("SELECT f.formStatus FROM Form f WHERE f.employee = ?1")
     FormStatus getFormStatusByEmployee(Employee employee);

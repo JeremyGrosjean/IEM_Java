@@ -76,5 +76,9 @@ public class EmployeeController {
         FormStatus formStatus = formRepository.getFormStatusByEmployee(employee);
         return formStatus.isFormStatus();
     }
+    /*********************************Remove Emplyee**********************************************/
+
+
+
 
 }

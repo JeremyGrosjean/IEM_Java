@@ -23,7 +23,7 @@ public class AccessController {
     }
 
     @GetMapping("/{id}")
-    public  Optional<Access> getById(@PathVariable("id") Integer id){
+    public  Optional<Access> getById(@PathVariable("id") String id){
         Optional<Access> access=accessRepository.findById(id);
 
         return access;

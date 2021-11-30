@@ -1,15 +1,15 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "form")
 public class Form {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_form")
-    private Integer id;
+    private String id = UUID.randomUUID().toString();
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -22,7 +22,7 @@ public class Form {
     public Form() {
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

@@ -36,7 +36,7 @@ public class FormController {
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the form hasn't been found
     @GetMapping("/{id}")
-    public Form getFormById(@PathVariable("id") Integer id){
+    public Form getFormById(@PathVariable("id") String id){
         Optional<Form> optionalForm = formRepository.findById(id);
         return optionalForm.orElse(null);
     }
