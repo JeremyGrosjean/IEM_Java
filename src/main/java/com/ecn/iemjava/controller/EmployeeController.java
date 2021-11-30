@@ -21,14 +21,16 @@ public class EmployeeController {
     private FormQuestionController formQuestionController;
     private IntermissionController intermissionController;
     private IntermissionStatusRepository intermissionStatusRepository;
+    private FormStatusRepository formStatusRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionStatusRepository intermissionStatusRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionStatusRepository intermissionStatusRepository, FormStatusRepository formStatusRepository) {
         this.employeeRepository = employeeRepository;
         this.formController = formController;
         this.formRepository = formRepository;
         this.formQuestionController = formQuestionController;
         this.intermissionController = intermissionController;
         this.intermissionStatusRepository = intermissionStatusRepository;
+        this.formStatusRepository = formStatusRepository;
     }
 
     // Request to add an answer
@@ -42,6 +44,9 @@ public class EmployeeController {
         // Link the formQuestion
         formQuestion.setForm(form);
         formQuestion.setQuestion(null);
+
+        form.setEmployee(employee);
+        form.setFormStatus(formStatusRepository.getFormStatusByStatus(false));
 
         intermission.setEmployee(employee);
         intermission.setStartDate(startDate);
