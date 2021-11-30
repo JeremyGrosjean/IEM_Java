@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ActivityRepository extends JpaRepository<Activity, Integer> {
+public interface ActivityRepository extends JpaRepository<Activity, String> {
     @Query("select a from Activity a where (a.date >= ?1) and (a.date <= ?2)")
     List<Activity> findActivityByCurrentWeek(LocalDate dateBeginning, LocalDate dateEnding);
 

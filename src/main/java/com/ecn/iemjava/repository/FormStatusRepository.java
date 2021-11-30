@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FormStatusRepository extends JpaRepository<FormStatus,Integer> {
+public interface FormStatusRepository extends JpaRepository<FormStatus,String> {
 
 
 }
