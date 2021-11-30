@@ -40,4 +40,12 @@ public class FormController {
         Optional<Form> optionalForm = formRepository.findById(id);
         return optionalForm.orElse(null);
     }
+
+    @GetMapping("/forms-completed")
+    public List<Form> getCompletedForms(){
+        return formRepository.getCompletedForms();
+    }
+
+
+
 }
