@@ -29,19 +29,17 @@ public class AccessController {
         return access;
     }
 
-    @PostMapping("/={login}&={mdp}")
-    public  String logON(@PathVariable("login") String login,@PathVariable("mdp")String mdp){
+    @PostMapping("/postaccess")
+    public Access postAccess(@RequestBody Access access){
 
-        Access access=accessRepository.findByAccessAccountPassword(login,mdp);
-        if(access==null){
-            return "plop";
-        }else{
-            return access.toString();
-        }
-
-
+        return accessRepository.save(access);
     }
 
 
+//    @PostMapping("/={login}&={mdp}")
+//    public  String logON(@PathVariable("login") String login,@PathVariable("mdp")String mdp){
+//
+//    return null;
+//    }
 
 }
