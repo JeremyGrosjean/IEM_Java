@@ -1,5 +1,6 @@
 package com.ecn.iemjava.controller;
 
+import com.ecn.iemjava.models.Employee;
 import com.ecn.iemjava.models.Form;
 import com.ecn.iemjava.repository.FormRepository;
 import org.springframework.web.bind.annotation.*;
@@ -40,12 +41,5 @@ public class FormController {
         Optional<Form> optionalForm = formRepository.findById(id);
         return optionalForm.orElse(null);
     }
-
-    @GetMapping("/forms-completed")
-    public List<Form> getCompletedForms(){
-        return formRepository.getCompletedForms();
-    }
-
-
 
 }

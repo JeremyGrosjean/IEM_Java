@@ -84,4 +84,24 @@ public class EmployeeController {
         return formStatus.isFormStatus();
     }
 
+    @GetMapping("/employees-with/forms-completed")
+    public List<Employee> getEmployeeByCompletedForms(){
+        return employeeRepository.getEmployeeByCompletedForm();
+    }
+
+    @GetMapping("/employees-with/forms-empty")
+    public List<Employee> getEmployeeByEmptyForms(){
+        return employeeRepository.getEmployeeByEmptyForm();
+    }
+
+    @GetMapping("/employees-with/date-asc")
+    public List<Employee> getEmployeeByIntermissionStartDateAsc(){
+        return employeeRepository.getEmployeeByIntermissionStartDateAsc();
+    }
+
+    @GetMapping("/employees-with/date-desc")
+    public List<Employee> getEmployeeByIntermissionStartDateDesc(){
+        return employeeRepository.getEmployeeByIntermissionStartDateDesc();
+    }
+
 }

@@ -17,4 +17,6 @@ public interface FormRepository extends JpaRepository<Form,Integer> {
 
     @Query("SELECT f FROM Form f WHERE f.formStatus.id = 1")
     List<Form> getCompletedForms();
+
+
 }
