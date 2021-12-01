@@ -20,15 +20,18 @@ public class EmployeeController {
     private FormRepository formRepository;
     private FormQuestionController formQuestionController;
     private IntermissionController intermissionController;
+    private IntermissionRepository intermissionRepository;
     private IntermissionStatusRepository intermissionStatusRepository;
     private FormStatusRepository formStatusRepository;
+    private SendEmailService sendEmailService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionStatusRepository intermissionStatusRepository, FormStatusRepository formStatusRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository, FormStatusRepository formStatusRepository) {
         this.employeeRepository = employeeRepository;
         this.formController = formController;
         this.formRepository = formRepository;
         this.formQuestionController = formQuestionController;
         this.intermissionController = intermissionController;
+        this.intermissionRepository = intermissionRepository;
         this.intermissionStatusRepository = intermissionStatusRepository;
         this.formStatusRepository = formStatusRepository;
     }
@@ -57,6 +60,11 @@ public class EmployeeController {
         formController.addForm(form);
         formQuestionController.addFormQuestion(formQuestion);
         intermissionController.addIntermission(intermission);
+
+//      TODO : Implementer le serveur smtp pour tester le code, recuperer le mail de l'admin pour l'insérer dans la méthode sendMessage
+
+//        String text = sendEmailService.createMailMessage(employee, intermission);
+//        sendEmailService.sendMessage(employee.getEmail(),"Entrée en intermission", text, "adresse Mail De L'User");
 
         return employee;
     }
@@ -102,6 +110,20 @@ public class EmployeeController {
     @GetMapping("/employees-with/date-desc")
     public List<Employee> getEmployeeByIntermissionStartDateDesc(){
         return employeeRepository.getEmployeeByIntermissionStartDateDesc();
+    }
+
+    // TODO : il faut completer le profil en intérgralité sinon champ vides
+    @PutMapping("/edit/{startDate}-{endDate}")
+    public Employee editEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate ){
+        if (!employee.getId().isEmpty()){
+            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
+            intermission.setStartDate(startDate);
+            intermission.setEndDate(endDate);
+
+            employeeRepository.save(employee);
+            intermissionRepository.save(intermission);
+        }
+        return employee;
     }
 
 }
