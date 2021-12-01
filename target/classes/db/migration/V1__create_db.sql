@@ -1,0 +1,119 @@
+
+-- Create table ACTIVITY **
+CREATE TABLE activity(
+	id_activity serial PRIMARY KEY,
+	title varchar,
+	content varchar,
+	date date,
+	id_user varchar,
+	period varchar
+);
+
+-- Create table Iem_USER **
+CREATE TABLE iem_user(
+	id_user varchar PRIMARY KEY,
+	last_name varchar,
+	first_name varchar,
+	email varchar,
+	user_status varchar
+);
+
+-- Create table ACCESS **
+CREATE TABLE access(
+	id_access serial PRIMARY KEY,
+	account varchar,
+	password varchar,
+	id_user varchar
+);
+
+-- Create table INTERMISSION **
+CREATE TABLE intermission(
+	id_intermission serial PRIMARY KEY,
+	start_date date,
+	end_date date,
+	id_user varchar,
+	id_intermission_status integer
+);
+
+-- Create table INTERMISSION_STATUS **
+CREATE TABLE intermission_status(
+	id_intermission_status serial PRIMARY KEY,
+	status boolean
+);
+
+-- Create table FORM **
+CREATE TABLE form(
+	id_form serial PRIMARY KEY,
+	id_user varchar,
+	id_form_status integer
+);
+
+-- Create table FORM_STATUS **
+CREATE TABLE form_status(
+	id_form_status serial PRIMARY KEY,
+	form_status boolean
+);
+
+-- Create table FORM_QUESTION
+CREATE TABLE form_question(
+	id_form_question serial PRIMARY KEY,
+	id_form integer,
+	id_question integer,
+	id_answer integer
+);
+
+-- Create table ANSWER
+CREATE TABLE answer(
+	id_answer serial PRIMARY KEY,
+	content varchar
+);
+
+-- Create table QUESTION **
+CREATE TABLE question(
+	id_question serial PRIMARY KEY,
+	content varchar,
+	generic boolean
+);
+
+
+-- Create foreign keys for table ACTIVITY : id_user et id_period
+ALTER TABLE activity ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
+
+-- Create foreign keys for table ACCESS : id_user
+ALTER TABLE access ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
+
+-- CCreate foreign keys for table FORM : id_user et id_form_status
+ALTER TABLE form ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
+ALTER TABLE form ADD CONSTRAINT fk_id_form_status FOREIGN KEY (id_form_status) REFERENCES form_status(id_form_status);
+
+-- Create foreign keys for table INTERMISSION : id_user et id_intermission_status
+ALTER TABLE intermission ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES iem_user(id_user);
+ALTER TABLE intermission ADD CONSTRAINT fk_id_intermission_status FOREIGN KEY (id_intermission_status) REFERENCES intermission_status(id_intermission_status);
+
+-- Create foreign keys for table FORM_QUESTION : id_question et id_form
+ALTER TABLE form_question ADD CONSTRAINT fk_id_question FOREIGN KEY (id_question) REFERENCES question(id_question);
+ALTER TABLE form_question ADD CONSTRAINT fk_id_form FOREIGN KEY (id_form) REFERENCES form(id_form);
+ALTER TABLE form_question ADD CONSTRAINT fk_id_answer FOREIGN KEY (id_answer) REFERENCES answer(id_answer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
