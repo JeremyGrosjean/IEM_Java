@@ -14,7 +14,7 @@ import java.util.Optional;
 public class FormController {
 
     // Injection of Repository
-    FormRepository formRepository;
+    private FormRepository formRepository;
     public FormController(FormRepository formRepository) {
         this.formRepository = formRepository;
     }
@@ -40,6 +40,11 @@ public class FormController {
     public Form getFormById(@PathVariable("id") Integer id){
         Optional<Form> optionalForm = formRepository.findById(id);
         return optionalForm.orElse(null);
+    }
+
+    @GetMapping("/by-employee/{idEmployee}")
+    public Form getFormByEmployee(@PathVariable("idEmployee") String id){
+        return formRepository.getFormByEmployee(id);
     }
 
 }

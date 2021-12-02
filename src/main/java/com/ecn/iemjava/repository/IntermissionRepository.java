@@ -11,4 +11,7 @@ public interface IntermissionRepository extends JpaRepository<Intermission,Integ
 
     @Query("SELECT i FROM Intermission i WHERE i.employee = ?1")
     Intermission getIntermissionByEmployee(Employee employee);
+
+    @Query("SELECT i FROM Intermission i WHERE i.employee.id = ?1")
+    Intermission getIntermissionByEmployeeId(String id);
 }
