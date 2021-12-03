@@ -16,10 +16,16 @@ public abstract class User {
     private String firstName;
     private String email;
 
+
 //    @OneToOne (mappedBy = "user")
 //    private Access access;
 
     public User() {
+    }
+
+    @Transient
+    public String getRoles() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
     }
 
     public String getId() {
@@ -59,6 +65,8 @@ public abstract class User {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public abstract User orElseThrow(Object o);
 
     //    public Access getAccess() {
 //        return access;

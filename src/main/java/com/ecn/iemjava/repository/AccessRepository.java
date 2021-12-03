@@ -14,4 +14,6 @@ public interface AccessRepository extends JpaRepository<Access, Integer> {
 
     @Query("SELECT a.user FROM Access a WHERE a.account =?1")
     User findUserByAccount(String account);
+
+    Access findByUser(User user);
 }
