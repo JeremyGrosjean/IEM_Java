@@ -1,5 +1,7 @@
-package com.ecn.iemjava.models;
+package com.ecn.iemjava.services;
 
+import com.ecn.iemjava.models.Employee;
+import com.ecn.iemjava.models.Intermission;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.MailjetClient;
