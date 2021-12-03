@@ -50,6 +50,10 @@ public class IntermissionController {
         return intermission.getStartDate();
     }
 
+    @GetMapping("/by-employee/{idEmployee}")
+    public Intermission getIntermissionByEmployee(@PathVariable("idEmployee") String id){
+        return intermissionRepository.getIntermissionByEmployeeId(id);
+    }
 
 //    @PutMapping("/startdate/{id}/{startDate}")
 //    public LocalDate setStartDateByEmployeeId(@PathVariable("id") String id, @PathVariable("startDate") LocalDate startDate){
