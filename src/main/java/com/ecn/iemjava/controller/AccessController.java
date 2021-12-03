@@ -1,18 +1,19 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Access;
-import com.ecn.iemjava.models.Employee;
 import com.ecn.iemjava.models.User;
 import com.ecn.iemjava.repository.AccessRepository;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import java.time.Instant;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/access")
 public class AccessController extends HttpServlet {
     AccessRepository accessRepository;
@@ -22,20 +23,18 @@ public class AccessController extends HttpServlet {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Access access, HttpServletRequest request) {
+    public User login(@RequestBody Access access, HttpServletRequest request) {
         try {
             Access loginInfos = this.accessRepository.findByAccount(access.getAccount());
             if (loginInfos.getPassword().equals(access.getPassword())) {
-                request.getSession().setAttribute("user", loginInfos.getUser());
-                request.getSession().setAttribute("LoginMessage", "LoginOk");
+                return loginInfos.getUser();
             }
             else {
-                request.getSession().setAttribute("LoginMessage", "Mot de passe erroné");
+                return null ;
             }
         } catch (Exception e){
-            request.getSession().setAttribute("LoginMessage", "Cet utilisateur n'existe pas");
+            return null ;
         }
-        return (String)request.getSession().getAttribute("LoginMessage");
     }
 
     @GetMapping("current-user")
