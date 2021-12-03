@@ -3,6 +3,7 @@ package com.ecn.iemjava.controller;
 import com.ecn.iemjava.models.*;
 import com.ecn.iemjava.repository.*;
 import com.ecn.iemjava.services.IemService;
+import com.ecn.iemjava.services.SendMailService;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,12 +23,14 @@ public class EmployeeController {
     private FormRepository formRepository;
     private IntermissionRepository intermissionRepository;
     private IemService iemService;
+    private SendMailService sendMailService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService) {
         this.employeeRepository = employeeRepository;
         this.formRepository = formRepository;
         this.intermissionRepository = intermissionRepository;
         this.iemService = iemService;
+        this.sendMailService = sendMailService;
     }
 
     // Request to add an answer
@@ -100,5 +103,10 @@ public class EmployeeController {
         return employee;
     }
 
-
+    @GetMapping("/send-mail/{idEmployee}")
+    public void sendMail(@PathVariable("idEmployee") String id) throws MailjetSocketTimeoutException, MailjetException {
+        Employee employee = getEmployeeById(id);
+        Intermission intermission = intermissionRepository.getIntermissionByEmployeeId(id);
+        sendMailService.sendMail(employee, intermission);
+    }
 }
