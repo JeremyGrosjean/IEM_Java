@@ -21,8 +21,8 @@ public class FormController {
 
     // Request to add an answer
     // TODO: change type of return whether it is needed or not (Form or void)
-    @PostMapping
-    public Form addForm(@RequestBody Form form){
+    @PostMapping()
+    public Form addForm(@RequestBody Form form, String idEmployee){
         formRepository.save(form);
         return form;
     }

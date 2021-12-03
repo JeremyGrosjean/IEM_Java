@@ -2,12 +2,12 @@ package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.*;
 import com.ecn.iemjava.repository.*;
+import com.ecn.iemjava.services.IemService;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,27 +17,17 @@ import java.util.Optional;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    // Injection of Repository
+    // Injection of Repositories
     private EmployeeRepository employeeRepository;
-    private FormController formController;
     private FormRepository formRepository;
-    private FormQuestionController formQuestionController;
-    private IntermissionController intermissionController;
     private IntermissionRepository intermissionRepository;
-    private IntermissionStatusRepository intermissionStatusRepository;
-    private FormStatusRepository formStatusRepository;
-    private SendMailService sendMailService;
+    private IemService iemService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository, FormStatusRepository formStatusRepository, SendMailService sendMailService) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService) {
         this.employeeRepository = employeeRepository;
-        this.formController = formController;
         this.formRepository = formRepository;
-        this.formQuestionController = formQuestionController;
-        this.intermissionController = intermissionController;
         this.intermissionRepository = intermissionRepository;
-        this.intermissionStatusRepository = intermissionStatusRepository;
-        this.formStatusRepository = formStatusRepository;
-        this.sendMailService = sendMailService;
+        this.iemService = iemService;
     }
 
     // Request to add an answer
@@ -45,32 +35,11 @@ public class EmployeeController {
     @PostMapping("/{startDate}")
     public Employee addEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) throws MailjetSocketTimeoutException, MailjetException {
         // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
-        Form form = new Form();
-        FormQuestion formQuestion = new FormQuestion();
-        Intermission intermission = new Intermission();
-        // Link the formQuestion
-        formQuestion.setForm(form);
-        formQuestion.setQuestion(null);
-
-        form.setEmployee(employee);
-        form.setFormStatus(formStatusRepository.getFormStatusByStatus(false));
-
-        intermission.setEmployee(employee);
-        intermission.setStartDate(startDate);
-        intermission.setEndDate(null);
-        intermission.setIntermissionStatus(intermissionStatusRepository.getIntermissionStatusByStatus(false));
+        Form form = iemService.createForm(employee);
+        iemService.createFormQuestions(form);
+        iemService.createIntermission(employee, startDate);
 
         employeeRepository.save(employee);
-        formController.addForm(form);
-        formQuestionController.addFormQuestion(formQuestion);
-        intermissionController.addIntermission(intermission);
-
-//      TODO : Implementer le serveur smtp pour tester le code, recuperer le mail de l'admin pour l'insérer dans la méthode sendMessage
-
-//        String text = sendEmailService.createMailMessage(employee, intermission);
-//        sendEmailService.sendMessage(employee.getEmail(),"Entrée en intermission", text, "adresse Mail De L'User");
-        sendMailService.sendMail(employee,intermission);
-
         return employee;
     }
 
@@ -130,5 +99,6 @@ public class EmployeeController {
         }
         return employee;
     }
+
 
 }
