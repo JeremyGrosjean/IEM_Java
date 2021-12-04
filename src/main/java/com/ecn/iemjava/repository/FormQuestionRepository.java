@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
-public interface FormQuestionRepository extends JpaRepository<FormQuestion, Integer> {
+public interface FormQuestionRepository extends JpaRepository<FormQuestion, String> {
 
 
 }

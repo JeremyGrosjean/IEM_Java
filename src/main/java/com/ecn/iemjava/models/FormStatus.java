@@ -1,14 +1,15 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "form_status")
 public class FormStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_form_status")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "form_status")

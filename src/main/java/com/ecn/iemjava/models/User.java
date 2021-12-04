@@ -16,8 +16,8 @@ public abstract class User {
     private String firstName;
     private String email;
 
-//    @OneToOne (mappedBy = "user")
-//    private Access access;
+    @OneToOne (mappedBy = "user")
+    private Access access;
 
     public User() {
     }

@@ -44,7 +44,7 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteActivity(@PathVariable ("id") Integer id){
+    public void deleteActivity(@PathVariable ("id") String id){
         activityRepository.deleteById(id);
     }
 

@@ -1,19 +1,16 @@
 package com.ecn.iemjava.controller;
 
-import com.ecn.iemjava.models.Answer;
 import com.ecn.iemjava.models.FormQuestion;
-import com.ecn.iemjava.models.Question;
 import com.ecn.iemjava.repository.FormQuestionRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/formquestion")
+@RequestMapping("/form-question")
 public class FormQuestionController {
 
     private FormQuestionRepository formQuestionRepository;
@@ -22,9 +19,8 @@ public class FormQuestionController {
         this.formQuestionRepository = formQuestionRepository;
     }
 
-
-    @PostMapping
-    public FormQuestion addFormQuestion(@RequestBody FormQuestion formQuestion){
+    @PostMapping("/custom-question")
+    public FormQuestion createCustomFormQuestion(@RequestBody FormQuestion formQuestion){
         formQuestionRepository.save(formQuestion);
         return formQuestion;
     }
@@ -35,7 +31,7 @@ public class FormQuestionController {
     }
 
     @GetMapping("/question-answer/{id}")
-    public List<FormQuestion> getFormQuestion(@PathVariable("id") String id){
+    public List<FormQuestion> getFormQuestionsByEmployee(@PathVariable("id") String id){
         List<FormQuestion> formQuestionList;
         formQuestionList = getAllFormQuestions();
 

@@ -1,14 +1,15 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "intermission_status")
 public class IntermissionStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_intermission_status")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private boolean status;

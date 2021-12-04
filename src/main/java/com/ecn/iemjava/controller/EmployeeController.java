@@ -2,8 +2,15 @@ package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.*;
 import com.ecn.iemjava.repository.*;
+import com.ecn.iemjava.services.IemService;
+import com.ecn.iemjava.services.SendMailService;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,44 +19,42 @@ import java.util.Optional;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    // Injection of Repository
+    // Injection of Repositories
     private EmployeeRepository employeeRepository;
-    private FormController formController;
     private FormRepository formRepository;
-    private FormQuestionController formQuestionController;
-    private IntermissionController intermissionController;
-    private IntermissionStatusRepository intermissionStatusRepository;
+    private IntermissionRepository intermissionRepository;
+    private IemService iemService;
+    private SendMailService sendMailService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormController formController, FormRepository formRepository, FormQuestionController formQuestionController, IntermissionController intermissionController, IntermissionStatusRepository intermissionStatusRepository) {
+    private FormStatusRepository formStatusRepository;
+    private IntermissionStatusRepository intermissionStatusRepository;
+    private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
+    private FormQuestionRepository formQuestionRepository;
+
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService, FormStatusRepository formStatusRepository, IntermissionStatusRepository intermissionStatusRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository) {
         this.employeeRepository = employeeRepository;
-        this.formController = formController;
         this.formRepository = formRepository;
-        this.formQuestionController = formQuestionController;
-        this.intermissionController = intermissionController;
+        this.intermissionRepository = intermissionRepository;
+        this.iemService = iemService;
+        this.sendMailService = sendMailService;
+        this.formStatusRepository = formStatusRepository;
         this.intermissionStatusRepository = intermissionStatusRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.formQuestionRepository = formQuestionRepository;
     }
 
     // Request to add an answer
     // TODO: change type of return wether it is needed or not (Employee or void)
-    @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee){
+    @PostMapping("/{startDate}")
+    public Employee addEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) throws MailjetSocketTimeoutException, MailjetException {
         // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
-        Form form = new Form();
-        FormQuestion formQuestion = new FormQuestion();
-        Intermission intermission = new Intermission();
-        // Link the formQuestion
-        formQuestion.setForm(form);
-        formQuestion.setQuestion(null);
-
-        intermission.setEmployee(employee);
-        intermission.setStartDate(null);
-        intermission.setEndDate(null);
-        intermission.setIntermissionStatus(intermissionStatusRepository.getIntermissionStatusByStatus(false));
-
         employeeRepository.save(employee);
-        formController.addForm(form);
-        formQuestionController.addFormQuestion(formQuestion);
-        intermissionController.addIntermission(intermission);
+        Form form = iemService.createForm(employee);
+        iemService.createFormQuestions(form);
+        iemService.createIntermission(employee, startDate);
+        iemService.createAccess(employee);
 
         return employee;
     }
@@ -71,10 +76,54 @@ public class EmployeeController {
 
     // Request to get the form status
     @GetMapping("/formstatus/{id}")
-    public boolean getFormStatus(@PathVariable("id") String id){
-        Employee employee = getEmployeeById(id);
+    public boolean getFormStatus(@PathVariable("id")Integer id){
+        Employee employee = getEmployeeById(id.toString());
         FormStatus formStatus = formRepository.getFormStatusByEmployee(employee);
         return formStatus.isFormStatus();
     }
+    /*********************************Remove Emplyee**********************************************/
 
+
+
+
+    @GetMapping("/employees-with/forms-completed")
+    public List<Employee> getEmployeeByCompletedForms(){
+        return employeeRepository.getEmployeeByCompletedForm();
+    }
+
+    @GetMapping("/employees-with/forms-empty")
+    public List<Employee> getEmployeeByEmptyForms(){
+        return employeeRepository.getEmployeeByEmptyForm();
+    }
+
+    @GetMapping("/employees-with/date-asc")
+    public List<Employee> getEmployeeByIntermissionStartDateAsc(){
+        return employeeRepository.getEmployeeByIntermissionStartDateAsc();
+    }
+
+    @GetMapping("/employees-with/date-desc")
+    public List<Employee> getEmployeeByIntermissionStartDateDesc(){
+        return employeeRepository.getEmployeeByIntermissionStartDateDesc();
+    }
+
+    // TODO : il faut completer le profil en intérgralité sinon champ vides
+    @PutMapping("/edit/{startDate}-{endDate}")
+    public Employee editEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate ){
+        if (!employee.getId().isEmpty()){
+            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
+            intermission.setStartDate(startDate);
+            intermission.setEndDate(endDate);
+
+            employeeRepository.save(employee);
+            intermissionRepository.save(intermission);
+        }
+        return employee;
+    }
+
+    @GetMapping("/send-mail/{idEmployee}")
+    public void sendMail(@PathVariable("idEmployee") String id) throws MailjetSocketTimeoutException, MailjetException {
+        Employee employee = getEmployeeById(id);
+        Intermission intermission = intermissionRepository.getIntermissionByEmployeeId(id);
+        sendMailService.sendMail(employee, intermission);
+    }
 }

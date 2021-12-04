@@ -1,7 +1,7 @@
 
 -- Create table ACTIVITY **
 CREATE TABLE activity(
-	id_activity serial PRIMARY KEY,
+	id_activity varchar PRIMARY KEY,
 	title varchar,
 	content varchar,
 	date date,
@@ -20,7 +20,7 @@ CREATE TABLE iem_user(
 
 -- Create table ACCESS **
 CREATE TABLE access(
-	id_access serial PRIMARY KEY,
+	id_access varchar PRIMARY KEY,
 	account varchar,
 	password varchar,
 	id_user varchar
@@ -28,7 +28,7 @@ CREATE TABLE access(
 
 -- Create table INTERMISSION **
 CREATE TABLE intermission(
-	id_intermission serial PRIMARY KEY,
+	id_intermission varchar PRIMARY KEY,
 	start_date date,
 	end_date date,
 	id_user varchar,
@@ -43,7 +43,7 @@ CREATE TABLE intermission_status(
 
 -- Create table FORM **
 CREATE TABLE form(
-	id_form serial PRIMARY KEY,
+	id_form varchar PRIMARY KEY,
 	id_user varchar,
 	id_form_status integer
 );
@@ -56,21 +56,21 @@ CREATE TABLE form_status(
 
 -- Create table FORM_QUESTION
 CREATE TABLE form_question(
-	id_form_question serial PRIMARY KEY,
-	id_form integer,
-	id_question integer,
-	id_answer integer
+	id_form_question varchar PRIMARY KEY,
+	id_form varchar,
+	id_question varchar,
+	id_answer varchar
 );
 
 -- Create table ANSWER
 CREATE TABLE answer(
-	id_answer serial PRIMARY KEY,
+	id_answer varchar PRIMARY KEY,
 	content varchar
 );
 
 -- Create table QUESTION **
 CREATE TABLE question(
-	id_question serial PRIMARY KEY,
+	id_question varchar PRIMARY KEY,
 	content varchar,
 	generic boolean
 );
@@ -94,6 +94,9 @@ ALTER TABLE intermission ADD CONSTRAINT fk_id_intermission_status FOREIGN KEY (i
 ALTER TABLE form_question ADD CONSTRAINT fk_id_question FOREIGN KEY (id_question) REFERENCES question(id_question);
 ALTER TABLE form_question ADD CONSTRAINT fk_id_form FOREIGN KEY (id_form) REFERENCES form(id_form);
 ALTER TABLE form_question ADD CONSTRAINT fk_id_answer FOREIGN KEY (id_answer) REFERENCES answer(id_answer);
+
+-- DROP SCHEMA public CASCADE;
+-- CREATE SCHEMA public;
 
 
 

@@ -1,21 +1,22 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "intermission")
 public class Intermission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_intermission")
-    private Integer id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -28,23 +29,23 @@ public class Intermission {
     public Intermission() {
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
