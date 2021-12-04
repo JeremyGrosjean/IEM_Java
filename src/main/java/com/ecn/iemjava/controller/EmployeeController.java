@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -41,6 +42,8 @@ public class EmployeeController {
         Form form = iemService.createForm(employee);
         iemService.createFormQuestions(form);
         iemService.createIntermission(employee, startDate);
+
+        iemService.createAccess(employee);
 
         employeeRepository.save(employee);
         return employee;

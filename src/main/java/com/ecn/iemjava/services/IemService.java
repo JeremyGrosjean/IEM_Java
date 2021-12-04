@@ -1,5 +1,6 @@
 package com.ecn.iemjava.services;
 
+import com.ecn.iemjava.controller.AccessController;
 import com.ecn.iemjava.models.*;
 import com.ecn.iemjava.repository.*;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class IemService {
@@ -18,8 +20,9 @@ public class IemService {
     private FormQuestionRepository formQuestionRepository;
     private IntermissionRepository intermissionRepository;
     private IntermissionStatusRepository intermissionStatusRepository;
+    private AccessController accessController;
 
-    public IemService(FormStatusRepository formStatusRepository, FormRepository formRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository, IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository) {
+    public IemService(FormStatusRepository formStatusRepository, FormRepository formRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository, IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository, AccessController accessController) {
         this.formStatusRepository = formStatusRepository;
         this.formRepository = formRepository;
         this.questionRepository = questionRepository;
@@ -27,6 +30,7 @@ public class IemService {
         this.formQuestionRepository = formQuestionRepository;
         this.intermissionRepository = intermissionRepository;
         this.intermissionStatusRepository = intermissionStatusRepository;
+        this.accessController = accessController;
     }
 
     public Form createForm(Employee employee){
@@ -75,4 +79,10 @@ public class IemService {
     }
 
 
+    public void createAccess(Employee employee) {
+        Access access = new Access();
+        access.setAccount(employee.getEmail());
+        access.setPassword(UUID.randomUUID().toString());
+        accessController.addAccessByIdUser(access, employee.getId());
+    }
 }
