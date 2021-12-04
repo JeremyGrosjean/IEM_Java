@@ -1,5 +1,6 @@
 package com.ecn.iemjava.controller;
 
+import com.ecn.iemjava.models.Employee;
 import com.ecn.iemjava.models.Form;
 import com.ecn.iemjava.repository.FormRepository;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,15 @@ import java.util.Optional;
 public class FormController {
 
     // Injection of Repository
-    FormRepository formRepository;
+    private FormRepository formRepository;
     public FormController(FormRepository formRepository) {
         this.formRepository = formRepository;
     }
 
     // Request to add an answer
     // TODO: change type of return whether it is needed or not (Form or void)
-    @PostMapping
-    public Form addForm(@RequestBody Form form){
+    @PostMapping()
+    public Form addForm(@RequestBody Form form, String idEmployee){
         formRepository.save(form);
         return form;
     }
@@ -40,4 +41,12 @@ public class FormController {
         Optional<Form> optionalForm = formRepository.findById(id);
         return optionalForm.orElse(null);
     }
+
+    @GetMapping("/by-employee/{idEmployee}")
+    public Form getFormByEmployee(@PathVariable("idEmployee") String id){
+        return formRepository.getFormByEmployee(id);
+    }
+
+
+
 }

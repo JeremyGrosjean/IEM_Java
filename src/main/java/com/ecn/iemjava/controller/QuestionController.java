@@ -1,6 +1,8 @@
 package com.ecn.iemjava.controller;
 
+import com.ecn.iemjava.models.FormQuestion;
 import com.ecn.iemjava.models.Question;
+import com.ecn.iemjava.repository.FormQuestionRepository;
 import com.ecn.iemjava.repository.QuestionRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +14,16 @@ import java.util.Optional;
 public class QuestionController {
 
     // Injection of InjectionRepository
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
+    private FormQuestionRepository formQuestionRepository;
     public QuestionController(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
     // Request to add a question
     // TODO: change type of return wether it is needed or not (Question or void)
-    @PostMapping
-    public Question addQuestion(@RequestBody Question question){
+    @PostMapping()
+    public Question addCustomQuestion(@RequestBody Question question){
         questionRepository.save(question);
         return question;
     }

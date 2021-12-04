@@ -1,6 +1,7 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Answer;
+import com.ecn.iemjava.models.FormQuestion;
 import com.ecn.iemjava.repository.AnswerRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +39,12 @@ public class AnswerController {
     public Answer getAnswerById(@PathVariable("id") String id){
         Optional<Answer> optionalAnswer = answerRepository.findById(id);
         return optionalAnswer.orElse(null);
+    }
+
+    @PutMapping("/persist")
+    public void persistAnswers(@RequestBody List<FormQuestion> formQuestionList){
+        formQuestionList.forEach((formQuestion -> {
+            answerRepository.save(formQuestion.getAnswer());
+        }));
     }
 }

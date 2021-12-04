@@ -32,4 +32,11 @@ public class Question {
         this.content = content;
     }
 
+    public boolean isGeneric() {
+        return generic;
+    }
+
+    public void setGeneric(boolean generic) {
+        this.generic = generic;
+    }
 }
