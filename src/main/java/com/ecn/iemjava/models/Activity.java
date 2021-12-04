@@ -3,15 +3,15 @@ package com.ecn.iemjava.models;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "activity")
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_activity")
-    private Integer id;
+    private String id = UUID.randomUUID().toString();
 
     private String title;
     private String content;
@@ -23,12 +23,8 @@ public class Activity {
 
     private String period;
 
-    public Integer getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitle() {

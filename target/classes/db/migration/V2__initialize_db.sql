@@ -9,9 +9,12 @@ INSERT INTO form_status (id_form_status, form_status) VALUES
 (2, 'false');
 
 -- generic question
-INSERT INTO question (content, generic) VALUES
-('Si tu devais faire un bilan de ta dernière mission', 'true'),
- ('Tes souhaits pour ton prochain poste', 'true'),
- ('Les centres de service que tu souhaites rejoindre/éviter', 'true'),
- ('Un projet que tu souhaites rejoindre/éviter', 'true'),
- ('Souhaites-tu te former et si oui sur quel sujet', 'true');
+INSERT INTO question (id_question,content, generic) VALUES
+('1','Si tu devais faire un bilan de ta dernière mission', 'true'),
+ ('2','Tes souhaits pour ton prochain poste', 'true'),
+ ('3','Les centres de service que tu souhaites rejoindre/éviter', 'true'),
+ ('4','Un projet que tu souhaites rejoindre/éviter', 'true'),
+ ('5','Souhaites-tu te former et si oui sur quel sujet', 'true');
+
+ -- DROP SCHEMA public CASCADE;
+-- CREATE SCHEMA public;

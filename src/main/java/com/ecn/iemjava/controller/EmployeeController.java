@@ -63,11 +63,15 @@ public class EmployeeController {
 
     // Request to get the form status
     @GetMapping("/formstatus/{id}")
-    public boolean getFormStatus(@PathVariable("id") String id){
-        Employee employee = getEmployeeById(id);
+    public boolean getFormStatus(@PathVariable("id")Integer id){
+        Employee employee = getEmployeeById(id.toString());
         FormStatus formStatus = formRepository.getFormStatusByEmployee(employee);
         return formStatus.isFormStatus();
     }
+    /*********************************Remove Emplyee**********************************************/
+
+
+
 
     @GetMapping("/employees-with/forms-completed")
     public List<Employee> getEmployeeByCompletedForms(){

@@ -36,7 +36,7 @@ public class AnswerController {
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the answer hasn't been found
     @GetMapping("/{id}")
-    public Answer getAnswerById(@PathVariable("id") Integer id){
+    public Answer getAnswerById(@PathVariable("id") String id){
         Optional<Answer> optionalAnswer = answerRepository.findById(id);
         return optionalAnswer.orElse(null);
     }

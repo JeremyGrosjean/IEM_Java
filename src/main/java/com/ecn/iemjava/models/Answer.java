@@ -1,27 +1,23 @@
 package com.ecn.iemjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "answer")
 public class Answer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_answer")
-    private Integer id;
+    private String id = UUID.randomUUID().toString();
 
     private String content;
 
     public Answer() {
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getContent() {
