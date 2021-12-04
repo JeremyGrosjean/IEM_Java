@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/access")
 public class AccessController {
 
@@ -50,11 +51,6 @@ public class AccessController {
         } catch (Exception e){
             return null ;
         }
-    }
-
-    @GetMapping("current-user")
-    public User getCurrentUser(HttpServletRequest request){
-        return (User)request.getSession().getAttribute("user");
     }
 
     @GetMapping("/all")

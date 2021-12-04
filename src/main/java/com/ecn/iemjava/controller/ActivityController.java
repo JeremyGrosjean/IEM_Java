@@ -19,9 +19,9 @@ public class ActivityController {
         this.activityRepository = activityRepository;
     }
 
-    @GetMapping("/all")
-    public Map<LocalDate,List<Activity>> getAllActivities() {
-        return sortActivities(activityRepository.findAll());
+    @GetMapping("/all/user/{id}")
+    public Map<LocalDate,List<Activity>> getAllByUser(@PathVariable ("id") String id) {
+        return sortActivities(activityRepository.findAllByUser(id));
     }
 
     @ResponseBody
