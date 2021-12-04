@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/formquestion")
+@RequestMapping("/form-question")
 public class FormQuestionController {
 
     private FormQuestionRepository formQuestionRepository;
