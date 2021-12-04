@@ -48,7 +48,7 @@ public class IemService {
         // New list of FormQuestion
         List<FormQuestion> formQuestionList = new ArrayList<>();
         // For each question of the Generic Question List, we :
-        genericQuestions.forEach( (question -> {
+        genericQuestions.forEach( question -> {
             // New FormQuestion linked to the Form
             FormQuestion formQuestion = new FormQuestion();
             formQuestion.setForm(form);
@@ -64,7 +64,7 @@ public class IemService {
             formQuestion.setAnswer(answer);
             formQuestionRepository.save(formQuestion);
             formQuestionList.add(formQuestion);
-        }));
+        });
         return formQuestionList;
     }
 

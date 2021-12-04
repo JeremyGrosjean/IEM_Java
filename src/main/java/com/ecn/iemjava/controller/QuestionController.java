@@ -38,7 +38,7 @@ public class QuestionController {
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the question hasn't been found
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable("id") String id){
+    public Question getQuestionById(@PathVariable("id") Integer id){
         Optional<Question> optionalQuestion = questionRepository.findById(id);
         return optionalQuestion.orElse(null);
     }

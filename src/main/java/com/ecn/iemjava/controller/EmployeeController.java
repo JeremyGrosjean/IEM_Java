@@ -10,9 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -26,12 +26,23 @@ public class EmployeeController {
     private IemService iemService;
     private SendMailService sendMailService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService) {
+    private FormStatusRepository formStatusRepository;
+    private IntermissionStatusRepository intermissionStatusRepository;
+    private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
+    private FormQuestionRepository formQuestionRepository;
+
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService, FormStatusRepository formStatusRepository, IntermissionStatusRepository intermissionStatusRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository) {
         this.employeeRepository = employeeRepository;
         this.formRepository = formRepository;
         this.intermissionRepository = intermissionRepository;
         this.iemService = iemService;
         this.sendMailService = sendMailService;
+        this.formStatusRepository = formStatusRepository;
+        this.intermissionStatusRepository = intermissionStatusRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.formQuestionRepository = formQuestionRepository;
     }
 
     // Request to add an answer
@@ -39,13 +50,12 @@ public class EmployeeController {
     @PostMapping("/{startDate}")
     public Employee addEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) throws MailjetSocketTimeoutException, MailjetException {
         // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
+        employeeRepository.save(employee);
         Form form = iemService.createForm(employee);
         iemService.createFormQuestions(form);
         iemService.createIntermission(employee, startDate);
-
         iemService.createAccess(employee);
 
-        employeeRepository.save(employee);
         return employee;
     }
 
