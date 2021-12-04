@@ -15,4 +15,9 @@ public class Employee extends User{
 
     public Employee() {
     }
+
+    @Override
+    public User orElseThrow(Object o) {
+        return null;
+    }
 }

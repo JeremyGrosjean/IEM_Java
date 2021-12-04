@@ -12,4 +12,9 @@ public class Admin extends User{
     public Admin() {
     }
 
+    @Override
+    public User orElseThrow(Object o) {
+        return null;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.ecn.iemjava.security.services;
 
-import com.ecn.iemjava.models.Access;
 import com.ecn.iemjava.models.User;
 import com.ecn.iemjava.repository.AccessRepository;
 import com.ecn.iemjava.repository.UserRepository;
