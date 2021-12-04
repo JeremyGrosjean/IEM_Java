@@ -85,4 +85,25 @@ public class IemService {
         access.setPassword(UUID.randomUUID().toString());
         accessController.addAccessByIdUser(access, employee.getId());
     }
+
+    public void addCustomQuestion(Question question, String idEmployee){
+        FormQuestion formQuestion = new FormQuestion();
+        Form form = formRepository.getFormByEmployee(idEmployee);
+        Answer answer = new Answer();
+        formQuestion.setQuestion(question);
+        formQuestion.setForm(form);
+        formQuestion.setAnswer(answer);
+
+        answerRepository.save(answer);
+        formQuestionRepository.save(formQuestion);
+    }
+
+    public void deleteQuestionById(String idQuestion, String idEmployee){
+        List<FormQuestion> formQuestion = formQuestionRepository.getFormQuestionsByEmployeeId(idEmployee);
+        formQuestion.forEach( formQuestion1 -> {
+            if (formQuestion1.getQuestion().getId().equals(idQuestion)){
+                formQuestionRepository.deleteById(formQuestion1.getId());
+            }
+        });
+    }
 }
