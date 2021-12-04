@@ -50,7 +50,17 @@ public abstract class User {
         this.email = email;
     }
 
-//    public Access getAccess() {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    //    public Access getAccess() {
 //        return access;
 //    }
 //

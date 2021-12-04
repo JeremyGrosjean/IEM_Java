@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -48,9 +47,6 @@ public class ActivityController {
     public void deleteActivity(@PathVariable ("id") String id){
         activityRepository.deleteById(id);
     }
-
-    //TODO : just one day
-
 
 
     public Map<LocalDate, List<Activity>> sortActivities(List <Activity> activities){

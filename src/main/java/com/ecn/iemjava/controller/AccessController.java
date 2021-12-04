@@ -1,6 +1,17 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Access;
+import com.ecn.iemjava.models.User;
+import com.ecn.iemjava.repository.AccessRepository;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
+import java.time.Instant;
+import java.util.List;
+import com.ecn.iemjava.models.Access;
 import com.ecn.iemjava.models.Admin;
 import com.ecn.iemjava.models.Employee;
 import com.ecn.iemjava.models.User;
@@ -26,18 +37,34 @@ public class AccessController {
         this.adminRepository= adminRepository;
     }
 
+    @PostMapping("/login")
+    public User login(@RequestBody Access access, HttpServletRequest request) {
+        try {
+            Access loginInfos = this.accessRepository.findByAccount(access.getAccount());
+            if (loginInfos.getPassword().equals(access.getPassword())) {
+                return loginInfos.getUser();
+            }
+            else {
+                return null ;
+            }
+        } catch (Exception e){
+            return null ;
+        }
+    }
 
-    @GetMapping
-    public List<Access> getAll(){
-        List<Access> accesses=accessRepository.findAll();
+    @GetMapping("current-user")
+    public User getCurrentUser(HttpServletRequest request){
+        return (User)request.getSession().getAttribute("user");
+    }
 
-        return accesses;
+    @GetMapping("/all")
+    public List<Access> getAllAccess(){
+        return this.accessRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public  Access getById(@PathVariable("id") String id){
         Optional<Access> access=accessRepository.findById(id);
-
         return access.orElse(null);
     }
 
@@ -47,7 +74,6 @@ public class AccessController {
         List<Access> accesses=accessRepository.findAll();
         for(Access accessBDD:accesses){
             if(accessBDD.getId().equals(idaccess)){
-
                 accessRepository.deleteById(idaccess);
                 return  accessBDD;
             }
@@ -167,6 +193,5 @@ public class AccessController {
 //        /** renvois l'access validé sinon les verification precedente on deja envoyer null**/
 //        return access;
 //    }
-
 
 }
