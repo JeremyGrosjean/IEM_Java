@@ -19,12 +19,14 @@ public class IemService {
     private IntermissionRepository intermissionRepository;
     private IntermissionStatusRepository intermissionStatusRepository;
 
-    public IemService(FormStatusRepository formStatusRepository, FormRepository formRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository) {
+    public IemService(FormStatusRepository formStatusRepository, FormRepository formRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository, IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository) {
         this.formStatusRepository = formStatusRepository;
         this.formRepository = formRepository;
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.formQuestionRepository = formQuestionRepository;
+        this.intermissionRepository = intermissionRepository;
+        this.intermissionStatusRepository = intermissionStatusRepository;
     }
 
     public Form createForm(Employee employee){
