@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question,Integer> {
+public interface QuestionRepository extends JpaRepository<Question,String> {
     @Query("SELECT q FROM Question q WHERE q.generic = true")
     List<Question> getGenericQuestions();
 }
