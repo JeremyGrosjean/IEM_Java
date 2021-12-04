@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/access")
 public class AccessController extends HttpServlet {
     AccessRepository accessRepository;
