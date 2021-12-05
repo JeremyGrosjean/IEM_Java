@@ -50,6 +50,11 @@ public abstract class User {
         this.email = email;
     }
 
+    @Transient
+    public String getStatus() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
+
     @Override
     public String toString() {
         return "User{" +

@@ -16,4 +16,6 @@ public interface ActivityRepository extends JpaRepository<Activity, String> {
 
     @Query("select a from Activity a where a.date = :date")
     List<Activity> findActivityByOneDay(LocalDate date);
+
+//    List<Activity> findAllByUser(String id);
 }
