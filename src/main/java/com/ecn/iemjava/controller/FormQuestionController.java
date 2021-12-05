@@ -1,6 +1,7 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.FormQuestion;
+import com.ecn.iemjava.models.Question;
 import com.ecn.iemjava.repository.FormQuestionRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,11 @@ public class FormQuestionController {
         this.formQuestionRepository = formQuestionRepository;
     }
 
-    @PostMapping("/custom-question")
-    public FormQuestion createCustomFormQuestion(@RequestBody FormQuestion formQuestion){
-        formQuestionRepository.save(formQuestion);
-        return formQuestion;
-    }
+//    @PostMapping("/custom-question")
+//    public FormQuestion createCustomFormQuestion(@RequestBody FormQuestion formQuestion){
+//        formQuestionRepository.save(formQuestion);
+//        return formQuestion;
+//    }
 
     @GetMapping("/all")
     public List<FormQuestion> getAllFormQuestions(){
@@ -43,5 +44,10 @@ public class FormQuestionController {
             }
         }));
         return formQuestionListByEmployee;
+    }
+
+    @GetMapping("/by-employee/{idEmployee}")
+    public List<Question> getQuestionsByEmployee(@PathVariable("idEmployee") String id){
+        return formQuestionRepository.getQuestionsByEmployeeId(id);
     }
 }

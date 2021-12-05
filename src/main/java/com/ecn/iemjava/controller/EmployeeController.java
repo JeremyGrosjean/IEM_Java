@@ -26,23 +26,13 @@ public class EmployeeController {
     private IemService iemService;
     private SendMailService sendMailService;
 
-    private FormStatusRepository formStatusRepository;
-    private IntermissionStatusRepository intermissionStatusRepository;
-    private QuestionRepository questionRepository;
-    private AnswerRepository answerRepository;
-    private FormQuestionRepository formQuestionRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService, FormStatusRepository formStatusRepository, IntermissionStatusRepository intermissionStatusRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, FormQuestionRepository formQuestionRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService) {
         this.employeeRepository = employeeRepository;
         this.formRepository = formRepository;
         this.intermissionRepository = intermissionRepository;
         this.iemService = iemService;
         this.sendMailService = sendMailService;
-        this.formStatusRepository = formStatusRepository;
-        this.intermissionStatusRepository = intermissionStatusRepository;
-        this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
-        this.formQuestionRepository = formQuestionRepository;
     }
 
     // Request to add an answer
@@ -76,15 +66,11 @@ public class EmployeeController {
 
     // Request to get the form status
     @GetMapping("/formstatus/{id}")
-    public boolean getFormStatus(@PathVariable("id")Integer id){
-        Employee employee = getEmployeeById(id.toString());
+    public boolean getFormStatus(@PathVariable("id") String id){
+        Employee employee = getEmployeeById(id);
         FormStatus formStatus = formRepository.getFormStatusByEmployee(employee);
         return formStatus.isFormStatus();
     }
-    /*********************************Remove Emplyee**********************************************/
-
-
-
 
     @GetMapping("/employees-with/forms-completed")
     public List<Employee> getEmployeeByCompletedForms(){
