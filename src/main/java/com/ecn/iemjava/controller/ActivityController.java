@@ -19,10 +19,10 @@ public class ActivityController {
         this.activityRepository = activityRepository;
     }
 
-    @GetMapping("/all/user/{id}")
-    public Map<LocalDate,List<Activity>> getAllByUser(@PathVariable ("id") String id) {
-        return sortActivities(activityRepository.findAllByUser(id));
-    }
+//    @GetMapping("/all/user/{id}")
+//    public Map<LocalDate,List<Activity>> getAllByUser(@PathVariable ("id") String id) {
+//        return sortActivities(activityRepository.findAllByUser(id));
+//    }
 
     @ResponseBody
     @GetMapping("/week/{dateBeginning}/{dateEnding}")
