@@ -56,6 +56,11 @@ public class EmployeeController {
         return employeeRepository.findAll();
     }
 
+    @GetMapping("/all-with-intermission")
+    public List<Employee> getAllEmployeesWithIntermission(){
+        return employeeRepository.getEmployeeWithIntermissionOnGoing();
+    }
+
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the employee hasn't been found
     @GetMapping("/{id}")
@@ -93,14 +98,19 @@ public class EmployeeController {
     }
 
     // TODO : il faut completer le profil en intérgralité sinon champ vides
-    @PutMapping("/edit/{startDate}-{endDate}")
-    public Employee editEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate ){
-        if (!employee.getId().isEmpty()){
-            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
-            intermission.setStartDate(startDate);
-            intermission.setEndDate(endDate);
+    @PutMapping("/edit")
+    public Employee editEmployee(@RequestBody Employee employee){
 
-            employeeRepository.save(employee);
+
+        if (!employee.getId().isEmpty()){
+            Employee employee1 = getEmployeeById(employee.getId());
+            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee1);
+
+            if (!employee.getFirstName().isBlank()){employee1.setFirstName(employee.getFirstName());}
+            if (!employee.getLastName().isBlank()){employee1.setLastName(employee.getLastName());}
+            if (!employee.getEmail().isBlank()){employee1.setEmail(employee.getEmail());}
+
+            employeeRepository.save(employee1);
             intermissionRepository.save(intermission);
         }
         return employee;
