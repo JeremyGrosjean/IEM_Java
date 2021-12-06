@@ -1,7 +1,9 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Activity;
+import com.ecn.iemjava.models.User;
 import com.ecn.iemjava.repository.ActivityRepository;
+import com.ecn.iemjava.repository.UserRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,21 +16,26 @@ import java.util.*;
 @RequestMapping("/activity")
 public class ActivityController {
     ActivityRepository activityRepository;
+    UserRepository userRepository;
 
-    public ActivityController(ActivityRepository activityRepository) {
+    public ActivityController(ActivityRepository activityRepository, UserRepository userRepository) {
         this.activityRepository = activityRepository;
+        this.userRepository = userRepository;
     }
 
-//    @GetMapping("/all/user/{id}")
-//    public Map<LocalDate,List<Activity>> getAllByUser(@PathVariable ("id") String id) {
-//        return sortActivities(activityRepository.findAllByUser(id));
-//    }
+    @GetMapping("/all/user/{id}")
+    public Map<LocalDate,List<Activity>> getAllByUser(@PathVariable ("id") String id) {
+        User user = userRepository.findById(id).orElse(null);
+        return sortActivities(activityRepository.findAllByEmployee(user));
+    }
 
     @ResponseBody
-    @GetMapping("/week/{dateBeginning}/{dateEnding}")
+    @GetMapping("/week/{dateBeginning}/{dateEnding}/{idUser}")
     public Map<LocalDate,List<Activity>> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateBeginning,
-                                           @PathVariable ("dateEnding") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnding) {
-        return sortActivities(activityRepository.findActivityByCurrentWeek(dateBeginning, dateEnding));
+                                           @PathVariable ("dateEnding") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnding,
+                                           @PathVariable ("idUser") String idUser) {
+        User user = userRepository.findById(idUser).orElse(null);
+        return sortActivities(activityRepository.findActivityByCurrentWeekByUser(dateBeginning, dateEnding, user));
     }
 
     @ResponseBody
