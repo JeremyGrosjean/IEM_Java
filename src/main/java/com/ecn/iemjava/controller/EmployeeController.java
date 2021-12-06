@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +24,16 @@ public class EmployeeController {
     private IntermissionRepository intermissionRepository;
     private IemService iemService;
     private SendMailService sendMailService;
+    private AccessRepository accessRepository;
 
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService, AccessRepository accessRepository) {
         this.employeeRepository = employeeRepository;
         this.formRepository = formRepository;
         this.intermissionRepository = intermissionRepository;
         this.iemService = iemService;
         this.sendMailService = sendMailService;
+        this.accessRepository = accessRepository;
     }
 
     // Request to add an answer
@@ -56,10 +57,10 @@ public class EmployeeController {
         return employeeRepository.findAll();
     }
 
-    @GetMapping("/all-with-intermission")
-    public List<Employee> getAllEmployeesWithIntermission(){
-        return employeeRepository.getEmployeeWithIntermissionOnGoing();
-    }
+//    @GetMapping("/all-with-intermission")
+//    public List<Employee> getAllEmployeesWithIntermission(){
+//        return employeeRepository.getEmployeeWithIntermissionOnGoing();
+//    }
 
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the employee hasn't been found
@@ -120,6 +121,7 @@ public class EmployeeController {
     public void sendMail(@PathVariable("idEmployee") String id) throws MailjetSocketTimeoutException, MailjetException {
         Employee employee = getEmployeeById(id);
         Intermission intermission = intermissionRepository.getIntermissionByEmployeeId(id);
-        sendMailService.sendMail(employee, intermission);
+        Access access = accessRepository.getAccessByUserId(id);
+        sendMailService.sendMail(employee, intermission, access);
     }
 }
