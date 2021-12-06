@@ -29,8 +29,8 @@ public class SendMailService {
                                         .put("Name", "Jeremy"))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
-                                                .put("Email", employee.getEmail())
-                                                .put("Name", employee.getFirstName())))
+                                                .put("Email", "jeremy.grosjean.icam@gmail.com") //.put("Email", employee.getEmail())
+                                                .put("Name", "Jeremy"))) // .put("Name", employee.getFirstName())))
                                 .put(Emailv31.Message.SUBJECT, "Entrée en intermission")
                                 .put(Emailv31.Message.HTMLPART, "<p>Bonjour " + employee.getFirstName() +",</p>" +
                                         "<p>Ta période d’intermission va débuter le " +intermission.getStartDate() +".</p>" +
