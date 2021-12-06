@@ -36,7 +36,7 @@ public class EmployeeController {
     }
 
     // Request to add an answer
-    // TODO: change type of return wether it is needed or not (Employee or void)
+    // TODO: change type of return whether it is needed or not (Employee or void)
     @PostMapping("/{startDate}")
     public Employee addEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) throws MailjetSocketTimeoutException, MailjetException {
         // Declaration of a new Form, FormQuestion and Intermission to be associated to the employee
