@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +24,16 @@ public class EmployeeController {
     private IntermissionRepository intermissionRepository;
     private IemService iemService;
     private SendMailService sendMailService;
+    private AccessRepository accessRepository;
 
 
-    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService) {
+    public EmployeeController(EmployeeRepository employeeRepository, FormRepository formRepository, IntermissionRepository intermissionRepository, IemService iemService, SendMailService sendMailService, AccessRepository accessRepository) {
         this.employeeRepository = employeeRepository;
         this.formRepository = formRepository;
         this.intermissionRepository = intermissionRepository;
         this.iemService = iemService;
         this.sendMailService = sendMailService;
+        this.accessRepository = accessRepository;
     }
 
     // Request to add an answer
@@ -55,6 +56,11 @@ public class EmployeeController {
     public List<Employee> getAllEmployees(){
         return employeeRepository.findAll();
     }
+
+//    @GetMapping("/all-with-intermission")
+//    public List<Employee> getAllEmployeesWithIntermission(){
+//        return employeeRepository.getEmployeeWithIntermissionOnGoing();
+//    }
 
     // Request to get specific question with its id
     // TODO: deal with an Exception instead of returning "null" if the employee hasn't been found
@@ -93,14 +99,19 @@ public class EmployeeController {
     }
 
     // TODO : il faut completer le profil en intérgralité sinon champ vides
-    @PutMapping("/edit/{startDate}-{endDate}")
-    public Employee editEmployee(@RequestBody Employee employee, @PathVariable("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate ){
-        if (!employee.getId().isEmpty()){
-            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
-            intermission.setStartDate(startDate);
-            intermission.setEndDate(endDate);
+    @PutMapping("/edit")
+    public Employee editEmployee(@RequestBody Employee employee){
 
-            employeeRepository.save(employee);
+
+        if (!employee.getId().isEmpty()){
+            Employee employee1 = getEmployeeById(employee.getId());
+            Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee1);
+
+            if (!employee.getFirstName().isBlank()){employee1.setFirstName(employee.getFirstName());}
+            if (!employee.getLastName().isBlank()){employee1.setLastName(employee.getLastName());}
+            if (!employee.getEmail().isBlank()){employee1.setEmail(employee.getEmail());}
+
+            employeeRepository.save(employee1);
             intermissionRepository.save(intermission);
         }
         return employee;
@@ -110,6 +121,7 @@ public class EmployeeController {
     public void sendMail(@PathVariable("idEmployee") String id) throws MailjetSocketTimeoutException, MailjetException {
         Employee employee = getEmployeeById(id);
         Intermission intermission = intermissionRepository.getIntermissionByEmployeeId(id);
-        sendMailService.sendMail(employee, intermission);
+        Access access = accessRepository.getAccessByUserId(id);
+        sendMailService.sendMail(employee, intermission, access);
     }
 }

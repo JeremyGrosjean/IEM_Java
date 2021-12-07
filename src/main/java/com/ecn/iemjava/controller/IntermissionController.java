@@ -1,9 +1,11 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Employee;
+import com.ecn.iemjava.models.EndIntermission;
 import com.ecn.iemjava.models.Intermission;
 import com.ecn.iemjava.repository.EmployeeRepository;
 import com.ecn.iemjava.repository.IntermissionRepository;
+import com.ecn.iemjava.repository.IntermissionStatusRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -16,11 +18,13 @@ import java.util.Optional;
 public class IntermissionController {
 
     private IntermissionRepository intermissionRepository;
+    private IntermissionStatusRepository intermissionStatusRepository;
     private EmployeeRepository employeeRepository;
 
 
-    public IntermissionController(IntermissionRepository intermissionRepository, EmployeeRepository employeeRepository) {
+    public IntermissionController(IntermissionRepository intermissionRepository, IntermissionStatusRepository intermissionStatusRepository, EmployeeRepository employeeRepository) {
         this.intermissionRepository = intermissionRepository;
+        this.intermissionStatusRepository = intermissionStatusRepository;
         this.employeeRepository = employeeRepository;
     }
 
@@ -55,12 +59,11 @@ public class IntermissionController {
         return intermissionRepository.getIntermissionByEmployeeId(id);
     }
 
-//    @PutMapping("/startdate/{id}/{startDate}")
-//    public LocalDate setStartDateByEmployeeId(@PathVariable("id") String id, @PathVariable("startDate") LocalDate startDate){
-//        Employee employee = employeeController.getEmployeeById(id);
-//        Intermission intermission = intermissionRepository.getIntermissionByEmployee(employee);
-//        intermission.setStartDate(startDate);
-//        intermissionRepository.save(intermission);
-//        return intermission.getStartDate();
-//    }
+    @PutMapping("/end-intermission")
+    public void setEndDateByEmployeeId(@RequestBody EndIntermission endIntermission){
+        Intermission intermission = intermissionRepository.getIntermissionByEmployeeId(endIntermission.getIdEmployee());
+        intermission.setEndDate(endIntermission.getEndDate());
+        intermissionRepository.save(intermission);
+        intermission.setIntermissionStatus(intermissionStatusRepository.getIntermissionStatusByStatus(true));
+    }
 }

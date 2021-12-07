@@ -22,4 +22,7 @@ public interface EmployeeRepository extends JpaRepository<Employee,String> {
 
     @Query("SELECT e FROM Employee e JOIN Intermission i ON e = i.employee ORDER BY i.startDate DESC")
     List<Employee> getEmployeeByIntermissionStartDateDesc();
+
+//    @Query("SELECT e FROM Employee e JOIN Intermission i ON e = i.employee WHERE i.intermissionStatus.id = 2")
+//    List<Employee> getEmployeeWithIntermissionOnGoing();
 }
