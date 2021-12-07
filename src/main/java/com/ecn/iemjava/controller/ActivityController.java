@@ -29,6 +29,12 @@ public class ActivityController {
         return sortActivities(activityRepository.findAllByEmployee(user));
     }
 
+    @GetMapping("/all/user/{id}/test")
+    public List<Activity> getAllByUserTest(@PathVariable ("id") String id) {
+        User user = userRepository.findById(id).orElse(null);
+        return activityRepository.findAllByEmployee(user);
+    }
+
     @ResponseBody
     @GetMapping("/week/{dateBeginning}/{dateEnding}/{idUser}")
     public Map<LocalDate,List<Activity>> getCustomedActivities(@PathVariable ("dateBeginning") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateBeginning,

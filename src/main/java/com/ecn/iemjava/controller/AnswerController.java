@@ -1,21 +1,28 @@
 package com.ecn.iemjava.controller;
 
 import com.ecn.iemjava.models.Answer;
+import com.ecn.iemjava.models.Form;
 import com.ecn.iemjava.models.FormQuestion;
 import com.ecn.iemjava.repository.AnswerRepository;
+import com.ecn.iemjava.repository.FormRepository;
+import com.ecn.iemjava.repository.FormStatusRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/answer")
 public class AnswerController {
 
     // Injection of Repository
     AnswerRepository answerRepository;
-    public AnswerController(AnswerRepository answerRepository) {
+    FormStatusRepository formStatusRepository;
+
+    public AnswerController(AnswerRepository answerRepository, FormStatusRepository formStatusRepository) {
         this.answerRepository = answerRepository;
+        this.formStatusRepository = formStatusRepository;
     }
 
     // Request to add an answer
@@ -45,6 +52,8 @@ public class AnswerController {
     public void persistAnswers(@RequestBody List<FormQuestion> formQuestionList){
         formQuestionList.forEach((formQuestion -> {
             answerRepository.save(formQuestion.getAnswer());
+            Form form = formQuestion.getForm();
+            form.setFormStatus(formStatusRepository.getFormStatusByStatus(true));
         }));
     }
 }
